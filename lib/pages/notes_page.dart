@@ -7,9 +7,11 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:lists/assets/ui_components/app_bar.dart';
 import 'package:lists/assets/ui_components/fab.dart';
 import 'package:lists/assets/ui_components/folder_dropdown.dart';
+import 'package:lists/assets/ui_components/note_card.dart';
 import 'package:lists/database/db_helper.dart';
 import 'package:lists/database/models/folder_model.dart';
 import 'package:lists/database/models/list_model.dart';
+import 'package:lists/database/models/note_model.dart';
 import 'package:lists/forms/new_folder_form.dart';
 import 'package:lists/forms/new_note_form.dart';
 import 'package:path/path.dart';
@@ -134,6 +136,10 @@ class _NotesPageState extends State<NotesPage> {
                 MaterialPageRoute<void>(
                   builder: (_) => const NewNoteForm(),
                 ),
+              ).then(
+                (value) => setState(
+                  () {},
+                ),
               );
             },
           ),
@@ -147,13 +153,37 @@ class _NotesPageState extends State<NotesPage> {
               child: FoldersDropdown(
                 onClicked: (id) {
                   currentFolderId = id;
-                  debugPrint("Notes");
-                  debugPrint(
-                    currentFolderId.toString(),
-                  );
                 },
               ),
             ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  FutureBuilder<List<NoteModel>>(
+                    future: DatabaseHelper.instance.getNotes(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<NoteModel>> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: Text("Loading notes"),
+                        );
+                      }
+                      return snapshot.data!.isEmpty
+                          ? Center(
+                              child:
+                                  Text("No notes yet. Go ahead, create one!"),
+                            )
+                          : ListView(
+                              shrinkWrap: true,
+                              children: snapshot.data!.map((note) {
+                                return NoteCard(note: note);
+                              }).toList(),
+                            );
+                    },
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),

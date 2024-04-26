@@ -27,35 +27,34 @@ class DatabaseHelper {
     await db.execute("""
       CREATE TABLE folders(
         id INTEGER PRIMARY KEY,
-        name TEXT NOT NULL,
+        name TEXT UNIQUE,
         added TEXT NOT NULL,
-        modified TEXT,
-
+        modified TEXT
       )
     """);
-    await db.execute("""
-      CREATE TABLE lists(
-        id INTEGER PRIMARY KEY,
-        name TEXT NOT NULL,
-        added TEXT NOT NULL,
-        modified TEXT,
-        folderId INTEGER DEFAULT 1,
-        FOREIGN KEY (folderId) REFERENCES folders(id)
-        ON DELETE SET DEFAULT
-      )
-""");
+    await _createDefaultFolders(db);
+//     await db.execute("""
+//       CREATE TABLE lists(
+//         id INTEGER PRIMARY KEY,
+//         name TEXT NOT NULL,
+//         added TEXT NOT NULL,
+//         modified TEXT,
+//         folderId INTEGER DEFAULT 1,
+//         FOREIGN KEY (folderId) REFERENCES folders(id)
+//         ON DELETE SET DEFAULT
+//       )
+// """);
     await db.execute("""
       CREATE TABLE notes(
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
         added TEXT NOT NULL,
         modified TEXT,
+        content TEXT,
         folderId INTEGER DEFAULT 1,
-        FOREIGN KEY (folderId) REFERENCES folders(id)
-        ON DELETE SET DEFAULT
+        FOREIGN KEY (folderId) REFERENCES folders(id) ON DELETE SET DEFAULT
       )
-""");
-    await _createDefaultFolders(db);
+    """);
   }
 
   Future<void> _createDefaultFolders(Database database) async {

@@ -140,12 +140,6 @@ class _FolderPageState extends State<FolderPage> {
                                 child: ListTile(
                                   title: Text(folder.name),
                                   subtitle: Text(folder.id.toString()),
-                                  // onLongPress: () {
-                                  //   setState(() {
-                                  //     DatabaseHelper.instance
-                                  //         .removeFolder(folder.id!);
-                                  //   });
-                                  // },
                                   onLongPress: () {
                                     setState(() {
                                       DatabaseHelper.instance

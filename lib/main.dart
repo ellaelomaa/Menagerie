@@ -21,36 +21,6 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(
-    //   debugShowCheckedModeBanner: false,
-    //   home: SafeArea(
-    //     child: Scaffold(
-    //       appBar: CustomAppBar(),
-    //       drawer: DrawerNav(),
-    //       floatingActionButton: FloatingActionButton(
-    //         onPressed: () async {
-    //           selectedId != null
-    //               ? await DatabaseHelper.instance.update(
-    //                   Folder(id: selectedId, name: textController.text),
-    //                 )
-    //               : await DatabaseHelper.instance.addFolder(
-    //                   Folder(name: textController.text),
-    //                 );
-    //           setState(
-    //             () {
-    //               textController.clear();
-    //               selectedId = null;
-    //             },
-    //           );
-    //         },
-    //         child: Icon(Icons.save),
-    //       ),
-    //       body: Center(
-    //         child: Text("HOME"),
-    //       ),
-    //     ),
-    //   ),
-    // );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Homepage(),

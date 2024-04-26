@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lists/database/db_helper.dart';
 import 'package:lists/database/models/folder_model.dart';
-import 'package:lists/pages/notes_page.dart';
-import 'package:lists/vanhat/pages/notes.dart';
 
 class FoldersDropdown extends StatefulWidget {
   const FoldersDropdown({super.key, required this.onClicked});

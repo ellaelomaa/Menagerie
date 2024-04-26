@@ -17,7 +17,7 @@ class _NewNoteFormState extends State<NewNoteForm> {
   final _formKey = GlobalKey<FormState>();
   final _title = TextEditingController();
   final _content = TextEditingController();
-  int? currentFolderId = 1;
+  int currentFolderId = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,16 @@ class _NewNoteFormState extends State<NewNoteForm> {
               ),
               ElevatedButton(
                 key: const Key("save"),
-                onPressed: () {},
+                onPressed: () {
+                  DatabaseHelper.instance.addNote(
+                    NoteModel(
+                        name: _title.text,
+                        folderId: currentFolderId,
+                        added: DateTime.now().toString(),
+                        content: _content.text),
+                  );
+                  Navigator.pop(context);
+                },
                 child: const Text("Save"),
               ),
             ],
