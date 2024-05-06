@@ -1,19 +1,21 @@
-class Folder {
-  final int?
+class FolderModel {
+  late int?
       id; // Not mandatory, as the id will be null when the item is first created, before insertion to database.
-  final String name;
-  final String added;
-  final String? modified;
+  late String title;
+  late String added;
+  late String? modified;
 
-  Folder({this.id, required this.name, required this.added, this.modified});
+  FolderModel(
+      {this.id, required this.title, required this.added, this.modified});
 
-  factory Folder.fromMap(Map<String, dynamic> json) => Folder(
-      id: json["id"],
-      name: json["name"],
-      added: json["added"],
-      modified: json["modified"]);
+  FolderModel.fromMap(Map<String, dynamic> map) {
+    id = map["id"];
+    title = map["title"];
+    added = map["added"];
+    modified = map["modified"];
+  }
 
   Map<String, dynamic> toMap() {
-    return {"id": id, "name": name, "added": added, "modified": modified};
+    return {"id": id, "title": title, "added": added, "modified": modified};
   }
 }

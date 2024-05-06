@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:lists/pages/about_page.dart';
-import 'package:lists/pages/checklists_page.dart';
-import 'package:lists/pages/folder_page.dart';
-import 'package:lists/pages/notes_page.dart';
-import 'package:lists/pages/tarot_page.dart';
-import 'package:lists/pages/homepage.dart';
+import 'package:menagerie_provider/pages/checklists_page.dart';
+import 'package:menagerie_provider/pages/folder_page.dart';
+import 'package:menagerie_provider/pages/homepage.dart';
+import 'package:menagerie_provider/pages/notes_page.dart';
+import 'package:menagerie_provider/pages/ordered_page.dart';
+import 'package:menagerie_provider/pages/tarot_page.dart';
 
 class CustomDrawerButton extends StatelessWidget {
   const CustomDrawerButton(this.text, this.destination, this.flexSize,

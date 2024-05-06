@@ -1,7 +1,4 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,23 +9,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   CustomAppBar(
     this.title, {
     super.key,
-  }) : preferredSize = Size.fromHeight(80);
-
-  // const CustomAppBar({
-  //   super.key,
-  // });
+  }) : preferredSize = const Size.fromHeight(80);
 
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
       preferredSize: preferredSize,
       child: AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle(
+        systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: Colors.black,
             statusBarIconBrightness: Brightness.light),
         title: Text(
           title,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         flexibleSpace: Stack(
           children: [
@@ -48,11 +41,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             )
           ],
         ),
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
     );
   }
-
-  // @override
-  // Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

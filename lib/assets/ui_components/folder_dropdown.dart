@@ -1,75 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:lists/database/db_helper.dart';
-import 'package:lists/database/models/folder_model.dart';
+import 'package:menagerie_provider/database/models/folder_model.dart';
+import 'package:menagerie_provider/providers/folder_provider.dart';
+import 'package:provider/provider.dart';
 
-class FoldersDropdown extends StatefulWidget {
-  const FoldersDropdown({super.key, required this.onClicked});
+class FoldersDropdown extends StatelessWidget {
+  const FoldersDropdown({super.key});
 
-  method() => createState().updateDropdownmenu();
-  final Function onClicked;
-
-  @override
-  _FoldersDropdownState createState() => _FoldersDropdownState();
-}
-
-class _FoldersDropdownState extends State<FoldersDropdown> {
-  late List<DropdownMenuItem<String>> list;
-  int? currentFolderId = 1;
-  String? dropdownValue;
-
-  updateDropdownmenu() {
-    list = [];
-    DatabaseHelper.instance.getFolders().then(
-      (value) {
-        value.map((map) {
-          return getDropdownWidget(map);
-        }).forEach(
-          (element) {
-            list.add(element);
-          },
-        );
-        setState(() {});
-      },
-    );
-  }
-
-  DropdownMenuItem<String> getDropdownWidget(Folder folder) {
+  DropdownMenuItem<String> getDropdownWidget(FolderModel folder) {
     return DropdownMenuItem<String>(
       value: folder.id.toString(),
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0),
-        child: Text(folder.name),
+        child: Text(folder.title),
       ),
     );
   }
 
   @override
-  void initState() {
-    super.initState();
-    updateDropdownmenu();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Expanded(flex: 1, child: Text("Select folder:")),
-        Expanded(
-          flex: 2,
-          child: DropdownButtonFormField<String>(
-            hint: const Text("Select folder"),
-            onChanged: (value) {
-              widget.onClicked(
-                int.parse(value!),
-              );
-              updateDropdownmenu();
-            },
-            items: list,
-            isExpanded: true,
-            itemHeight: null,
-          ),
-        ),
-      ],
+    return Consumer<FolderProvider>(
+      builder: (context, provider, child) {
+        return DropdownButton<String>(
+          hint: const Text("Select folder"),
+          value: provider.selectedFolder.toString(),
+          onChanged: (String? v) {
+            provider.setSelectedItem(int.parse(v!));
+          },
+          items: provider.folders.map((map) => getDropdownWidget(map)).toList(),
+          isExpanded: true,
+          itemHeight: null,
+        );
+      },
     );
   }
 }
