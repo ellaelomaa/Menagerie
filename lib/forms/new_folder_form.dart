@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:menagerie_provider/database/db_helper.dart';
-import 'package:menagerie_provider/database/models/folder_model.dart';
-import 'package:menagerie_provider/providers/folder_provider.dart';
+import 'package:lists/database/models/folder_model.dart';
+import 'package:lists/providers/folder_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewFolderForm extends StatelessWidget {

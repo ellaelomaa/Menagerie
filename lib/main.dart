@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:menagerie_provider/pages/homepage.dart';
-import 'package:menagerie_provider/providers/folder_provider.dart';
-import 'package:menagerie_provider/providers/item_provider.dart';
+import 'package:lists/pages/homepage.dart';
+import 'package:lists/providers/folder_provider.dart';
+import 'package:lists/providers/item_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {

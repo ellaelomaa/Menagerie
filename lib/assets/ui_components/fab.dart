@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:menagerie_provider/forms/new_folder_form.dart';
-import 'package:menagerie_provider/forms/new_note_form.dart';
+import 'package:lists/forms/new_folder_form.dart';
+import 'package:lists/forms/new_note_form.dart';
 
 class FAB extends StatefulWidget {
   const FAB({super.key});

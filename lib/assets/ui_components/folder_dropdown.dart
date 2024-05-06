@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:menagerie_provider/database/models/folder_model.dart';
-import 'package:menagerie_provider/providers/folder_provider.dart';
+import 'package:lists/database/models/folder_model.dart';
+import 'package:lists/providers/folder_provider.dart';
 import 'package:provider/provider.dart';
 
 class FoldersDropdown extends StatelessWidget {

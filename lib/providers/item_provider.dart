@@ -1,8 +1,8 @@
 // Works as an intermediary between the user interface and the database.
 
 import 'package:flutter/material.dart';
-import 'package:menagerie_provider/database/db_helper.dart';
-import 'package:menagerie_provider/database/models/item_model.dart';
+import 'package:lists/database/db_helper.dart';
+import 'package:lists/database/models/item_model.dart';
 
 class NoteProvider extends ChangeNotifier {
   List<ItemModel> _notes = [];

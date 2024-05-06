@@ -1,10 +1,9 @@
 // ignore_for_file: avoid_print
 
 import 'dart:async';
-import 'package:menagerie_provider/database/models/folder_model.dart';
-import 'package:menagerie_provider/database/models/parent_model.dart';
-import 'package:menagerie_provider/database/models/item_model.dart';
-import 'package:menagerie_provider/providers/folder_provider.dart';
+import 'package:lists/database/models/folder_model.dart';
+import 'package:lists/database/models/item_model.dart';
+import 'package:lists/database/models/parent_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -13,20 +12,6 @@ class DatabaseHelper {
   static const itemTable = "items";
   static const folderTable = "folders";
   static const parentTable = "parents";
-
-  // static DatabaseHelper? _databaseHelper;
-  // static late Database _database;
-
-  // DatabaseHelper._internal() {
-  //   _databaseHelper = this;
-  // }
-
-  // factory DatabaseHelper() => _databaseHelper ?? DatabaseHelper._internal();
-
-  // Future<Database> get database async {
-  //   _database = await _initDatabase();
-  //   return _database;
-  // }
 
   static final DatabaseHelper _databaseHelper = DatabaseHelper._internal();
   factory DatabaseHelper() => _databaseHelper;
@@ -102,11 +87,6 @@ class DatabaseHelper {
         "folders",
         FolderModel(title: "Miscellaneous", added: DateTime.now().toString())
             .toMap());
-  }
-
-  Future _onConfigure(Database db) async {
-    // Add support for cascade delete
-    await db.execute("PRAGMA foreign_keys = ON");
   }
 
   /*

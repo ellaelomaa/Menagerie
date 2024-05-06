@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:menagerie_provider/assets/ui_components/app_bar.dart';
-import 'package:menagerie_provider/assets/ui_components/fab.dart';
-import 'package:menagerie_provider/assets/ui_components/note_card.dart';
-import 'package:menagerie_provider/providers/item_provider.dart';
+import 'package:lists/assets/ui_components/app_bar.dart';
+import 'package:lists/assets/ui_components/fab.dart';
+import 'package:lists/assets/ui_components/note_card.dart';
+import 'package:lists/providers/item_provider.dart';
 import 'package:provider/provider.dart';
 
 class NotesPage extends StatelessWidget {

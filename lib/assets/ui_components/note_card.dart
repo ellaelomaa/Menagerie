@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:menagerie_provider/database/models/item_model.dart';
-import 'package:menagerie_provider/providers/item_provider.dart';
+import 'package:lists/database/models/item_model.dart';
+import 'package:lists/providers/item_provider.dart';
 import 'package:provider/provider.dart';
 
 class NoteCard extends StatelessWidget {

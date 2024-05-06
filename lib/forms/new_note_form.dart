@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:menagerie_provider/assets/ui_components/app_bar.dart';
-import 'package:menagerie_provider/assets/ui_components/folder_dropdown.dart';
-import 'package:menagerie_provider/database/db_helper.dart';
-import 'package:menagerie_provider/database/models/folder_model.dart';
-import 'package:menagerie_provider/database/models/item_model.dart';
-import 'package:menagerie_provider/providers/folder_provider.dart';
-import 'package:menagerie_provider/providers/item_provider.dart';
+import 'package:lists/assets/ui_components/app_bar.dart';
+import 'package:lists/assets/ui_components/folder_dropdown.dart';
+import 'package:lists/database/models/item_model.dart';
+import 'package:lists/providers/folder_provider.dart';
+import 'package:lists/providers/item_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewNoteForm extends StatelessWidget {

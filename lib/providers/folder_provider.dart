@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:menagerie_provider/database/db_helper.dart';
-import 'package:menagerie_provider/database/models/folder_model.dart';
+import 'package:lists/database/db_helper.dart';
+import 'package:lists/database/models/folder_model.dart';
 
 class FolderProvider extends ChangeNotifier {
   List<FolderModel> _folders = [];
@@ -11,7 +11,6 @@ class FolderProvider extends ChangeNotifier {
   FolderProvider() {
     _databaseHelper = DatabaseHelper();
     _getAllFolders();
-    // _getAllFolders();
   }
 
   Future<void> _getAllFolders() async {
