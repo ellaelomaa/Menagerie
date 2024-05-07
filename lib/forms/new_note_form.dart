@@ -7,12 +7,20 @@ import 'package:lists/providers/folder_provider.dart';
 import 'package:lists/providers/item_provider.dart';
 import 'package:provider/provider.dart';
 
-class NewNoteForm extends StatelessWidget {
+class NewNoteForm extends StatefulWidget {
   NewNoteForm({super.key});
 
+  @override
+  State<NewNoteForm> createState() => _NewNoteFormState();
+}
+
+class _NewNoteFormState extends State<NewNoteForm> {
   // CONTROLLERS
   final _titleController = TextEditingController();
+
   final _contentController = TextEditingController();
+
+  bool editable = false;
 
   // DATA DO BE SAVED
   final title = "";
@@ -32,8 +40,8 @@ class NewNoteForm extends StatelessWidget {
           onPressed: () {
             if (_titleController.text.isNotEmpty) {
               ItemModel note = ItemModel(
-                  title: _titleController.text,
-                  content: _contentController.text,
+                  title: _titleController.text.trim(),
+                  content: _contentController.text.trim(),
                   added: DateTime.now().toString(),
                   type: "note",
                   pinned: 0,
@@ -53,7 +61,20 @@ class NewNoteForm extends StatelessWidget {
           },
           icon: const Icon(Icons.arrow_back),
         ),
-        title: Text("Tell your story"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Tell your story"),
+            IconButton(
+              onPressed: () {
+                editable = !editable;
+                setState(() {});
+              },
+              icon:
+                  editable == true ? Icon(Icons.edit) : Icon(Icons.visibility),
+            )
+          ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(3.0),
@@ -65,6 +86,7 @@ class NewNoteForm extends StatelessWidget {
                 TextFormField(
                   textAlign: TextAlign.center,
                   controller: _titleController,
+                  readOnly: editable,
                   decoration: InputDecoration(
                     isCollapsed: true,
                     border: InputBorder.none,
@@ -140,6 +162,7 @@ class NewNoteForm extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 20),
                       child: TextField(
+                        readOnly: editable,
                         controller: _contentController,
                         keyboardType: TextInputType.multiline,
                         decoration: InputDecoration(

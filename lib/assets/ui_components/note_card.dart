@@ -48,6 +48,9 @@ class NoteCard extends StatelessWidget {
         width: double.infinity,
         child: Card(
           child: GestureDetector(
+            onDoubleTap: () {
+              provider.markAsPinned(note);
+            },
             child: ListTile(
               leading: note.pinned == 1 ? Icon(Icons.favorite) : Icon(null),
               title: Text(note.title),
