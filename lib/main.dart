@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           create: (context) => FolderProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => NoteProvider(),
+          create: (context) => ItemProvider(),
         )
       ],
       child: MaterialApp(

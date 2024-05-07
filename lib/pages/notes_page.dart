@@ -15,7 +15,7 @@ class NotesPage extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar("Notes"),
       floatingActionButton: FAB(),
-      body: Consumer<NoteProvider>(
+      body: Consumer<ItemProvider>(
         builder: (context, provider, child) {
           var notes = provider.notes;
           if (notes.isEmpty) {

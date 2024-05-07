@@ -32,12 +32,8 @@ class FolderProvider extends ChangeNotifier {
   }
 
   Future deleteFolder(int id) async {
-    if (id == 1) {
-      print("Can't delete default folders!");
-    } else {
-      _folders.removeWhere((element) => element.id == id);
-      await _databaseHelper.deleteFolder(id);
-      _getAllFolders();
-    }
+    _folders.removeWhere((element) => element.id == id);
+    await _databaseHelper.deleteFolder(id);
+    _getAllFolders();
   }
 }

@@ -90,7 +90,7 @@ class DatabaseHelper {
   }
 
   /*
-  SETTERS
+  CREATE ITEM
   */
 
   Future<void> addFolder(FolderModel folder) async {
@@ -106,6 +106,29 @@ class DatabaseHelper {
   Future<void> addItem(ItemModel item) async {
     final db = await _databaseHelper.database;
     await db.insert(itemTable, item.toMap());
+  }
+
+  /*
+  UPDATE
+  */
+
+  Future<void> updateFolder(FolderModel folder) async {
+    final db = await _databaseHelper.database;
+    await db.update(folderTable, folder.toMap(),
+        where: "id = ?", whereArgs: [folder.id]);
+  }
+
+  Future<void> pinItem(ItemModel item) async {
+    final db = await _databaseHelper.database;
+    late int pinned;
+    if (item.pinned == 1) {
+      pinned = 0;
+    } else {
+      pinned = 1;
+    }
+    await db.update(itemTable, {"pinned": pinned},
+        where: "id = ?", whereArgs: [item.id]);
+    print(item.pinned);
   }
 
   /*
@@ -143,11 +166,7 @@ class DatabaseHelper {
     return FolderModel.fromMap(results[0]);
   }
 
-  Future<void> updateFolder(FolderModel folder) async {
-    final db = await _databaseHelper.database;
-    await db.update(folderTable, folder.toMap(),
-        where: "id = ?", whereArgs: [folder.id]);
-  }
+  // DELETE
 
   Future<void> deleteFolder(int id) async {
     final db = await _databaseHelper.database;

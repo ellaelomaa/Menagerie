@@ -22,7 +22,7 @@ class NewNoteForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final folderProvider = Provider.of<FolderProvider>(context, listen: false);
-    final noteProvider = Provider.of<NoteProvider>(context, listen: false);
+    final noteProvider = Provider.of<ItemProvider>(context, listen: false);
 
     return Scaffold(
       backgroundColor: cardColor,
