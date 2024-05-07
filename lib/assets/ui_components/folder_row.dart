@@ -23,16 +23,23 @@ class FolderRow extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListTile(
-            tileColor: Color.fromARGB(224, 212, 164, 198),
-            title: Text(folder.title),
-            subtitle: Text(folder.id.toString()),
-            trailing: IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                provider.deleteFolder(folder.id!);
-              },
-            ),
-          ),
+              tileColor: Color.fromARGB(224, 212, 164, 198),
+              title: Text(folder.title),
+              subtitle: Text(folder.id.toString()),
+              trailing: folder.id! != 1
+                  ? Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            provider.deleteFolder(folder.id!);
+                          },
+                          icon: Icon(Icons.delete),
+                        ),
+                        IconButton(onPressed: () {}, icon: Icon(Icons.edit))
+                      ],
+                    )
+                  : null),
         ),
       ),
     );

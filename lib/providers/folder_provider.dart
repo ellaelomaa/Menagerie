@@ -22,8 +22,6 @@ class FolderProvider extends ChangeNotifier {
   int get selectedFolder => _selectedFolder;
 
   Future<void> addFolder(FolderModel folder) async {
-    print("provider: inserting folder");
-    print(folder.title);
     await _databaseHelper.addFolder(folder);
     _getAllFolders();
   }

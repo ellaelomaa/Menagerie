@@ -24,7 +24,7 @@ class _FABState extends State<FAB> {
       openCloseDial: isDialOpen,
       children: [
         SpeedDialChild(
-          child: Icon(Icons.folder),
+          child: const Icon(Icons.folder),
           label: "New folder",
           onTap: () {
             Navigator.of(context).push(
@@ -35,7 +35,7 @@ class _FABState extends State<FAB> {
           },
         ),
         SpeedDialChild(
-          child: Icon(Icons.note),
+          child: const Icon(Icons.note),
           label: "New note",
           onTap: () {
             Navigator.of(context).push(
