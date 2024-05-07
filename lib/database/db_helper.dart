@@ -152,7 +152,7 @@ class DatabaseHelper {
       SELECT *
       FROM $itemTable
       WHERE type = "note"
-      ORDER BY added
+      ORDER BY pinned DESC, added DESC
 """);
     List<ItemModel> itemList =
         items.isNotEmpty ? items.map((e) => ItemModel.fromMap(e)).toList() : [];
@@ -164,6 +164,19 @@ class DatabaseHelper {
     List<Map<String, dynamic>> results =
         await db.query(folderTable, where: "id = ?", whereArgs: [id]);
     return FolderModel.fromMap(results[0]);
+  }
+
+  Future<List<ItemModel>> getPinned(String type) async {
+    final db = await _databaseHelper.database;
+    final List<Map<String, dynamic>> items = await db.rawQuery("""
+      SELECT *
+      FROM $itemTable
+      WHERE type = "note" AND pinned = 1
+      ORDER BY pinned, added
+""");
+    List<ItemModel> itemList =
+        items.isNotEmpty ? items.map((e) => ItemModel.fromMap(e)).toList() : [];
+    return itemList;
   }
 
   // DELETE

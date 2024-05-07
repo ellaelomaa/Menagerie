@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:lists/assets/ui_components/app_bar.dart';
+import 'package:lists/assets/ui_components/drawer.dart';
 import 'package:lists/assets/ui_components/fab.dart';
 import 'package:lists/assets/ui_components/note_card.dart';
 import 'package:lists/providers/item_provider.dart';
@@ -14,13 +15,14 @@ class NotesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar("Notes"),
+      drawer: const DrawerNav(),
       floatingActionButton: FAB(),
       body: Consumer<ItemProvider>(
         builder: (context, provider, child) {
           var notes = provider.notes;
           if (notes.isEmpty) {
             return Center(
-              child: Text(notes.length.toString()),
+              child: Text("No notes yet. Go ahead, create one!"),
             );
           } else {
             return ListView.builder(

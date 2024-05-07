@@ -6,9 +6,11 @@ import 'package:lists/database/models/item_model.dart';
 
 class ItemProvider extends ChangeNotifier {
   List<ItemModel> _notes = [];
+  List<ItemModel> _pinnedNotes = [];
   late DatabaseHelper _databaseHelper;
 
   List<ItemModel> get notes => _notes;
+  List<ItemModel> get pinnedNotes => _pinnedNotes;
 
   ItemProvider() {
     _databaseHelper = DatabaseHelper();
@@ -19,6 +21,11 @@ class ItemProvider extends ChangeNotifier {
 
   Future<void> _getAllNotes() async {
     _notes = await _databaseHelper.getItems("note");
+    notifyListeners();
+  }
+
+  Future<void> getPinned(String type) async {
+    _pinnedNotes = await _databaseHelper.getPinned("note");
     notifyListeners();
   }
 
