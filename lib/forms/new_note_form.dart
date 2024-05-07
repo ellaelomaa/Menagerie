@@ -36,6 +36,7 @@ class NewNoteForm extends StatelessWidget {
                   content: _contentController.text,
                   added: DateTime.now().toString(),
                   type: "note",
+                  pinned: 0,
                   folderId: folderProvider.selectedFolder);
               noteProvider.addItem(note);
               Navigator.pop(context);

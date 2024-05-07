@@ -6,11 +6,13 @@ import 'package:lists/database/models/item_model.dart';
 
 class ItemProvider extends ChangeNotifier {
   List<ItemModel> _notes = [];
-  List<ItemModel> _pinnedNotes = [];
+  String _selectedSort = "Alphabetically";
+  String _order = "ASC";
   late DatabaseHelper _databaseHelper;
 
   List<ItemModel> get notes => _notes;
-  List<ItemModel> get pinnedNotes => _pinnedNotes;
+  String get selectedSort => _selectedSort;
+  String get order => _order;
 
   ItemProvider() {
     _databaseHelper = DatabaseHelper();
@@ -20,12 +22,7 @@ class ItemProvider extends ChangeNotifier {
   // GETTERS
 
   Future<void> _getAllNotes() async {
-    _notes = await _databaseHelper.getItems("note");
-    notifyListeners();
-  }
-
-  Future<void> getPinned(String type) async {
-    _pinnedNotes = await _databaseHelper.getPinned("note");
+    _notes = await _databaseHelper.getItems("note", _selectedSort, _order);
     notifyListeners();
   }
 
@@ -40,6 +37,16 @@ class ItemProvider extends ChangeNotifier {
 
   Future<void> markAsPinned(ItemModel item) async {
     await _databaseHelper.pinItem(item);
+    _getAllNotes();
+  }
+
+  changeSort(String method) {
+    _selectedSort = method;
+    _getAllNotes();
+  }
+
+  changeOrder(String order) {
+    _order = order;
     _getAllNotes();
   }
 

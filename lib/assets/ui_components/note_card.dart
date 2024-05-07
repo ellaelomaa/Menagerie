@@ -51,7 +51,7 @@ class NoteCard extends StatelessWidget {
             child: ListTile(
               leading: note.pinned == 1 ? Icon(Icons.favorite) : Icon(null),
               title: Text(note.title),
-              subtitle: Text(dtFormatted),
+              subtitle: Text(note.pinned.toString()),
               trailing: PopupMenuButton(
                 itemBuilder: (context) => [
                   PopupMenuItem(
@@ -94,7 +94,7 @@ class NoteCard extends StatelessWidget {
                 offset: Offset(30, -10),
                 onSelected: (value) {
                   if (value == 1) {
-                    noteProvider.markAsPinned(note);
+                    provider.markAsPinned(note);
                   }
                   if (value == 2) {}
                   if (value == 3) {

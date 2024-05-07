@@ -6,6 +6,7 @@ import 'package:lists/database/models/item_model.dart';
 import 'package:lists/database/models/parent_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:lists/assets/consts/db_consts.dart' as consts;
 
 class DatabaseHelper {
   // TABLE CONSTANTS
@@ -66,9 +67,9 @@ class DatabaseHelper {
         added TEXT NOT NULL,
         modified TEXT,
         type TEXT NOT NULL,
-        folderId INTEGER DEFAULT 1,
+        folderId INTEGER NOT NULL DEFAULT 1,
         content TEXT,
-        pinned INTEGER DEFAULT 0,
+        pinned INTEGER NOT NULL DEFAULT 0,
         checked INTEGER DEFAULT 0,
         parentId INTEGER,
         judgement INTEGER,
@@ -84,9 +85,10 @@ class DatabaseHelper {
   Future<void> _createDefaultFolders(Database db) async {
     // print("creating default folders");
     await db.insert(
-        "folders",
-        FolderModel(title: "Miscellaneous", added: DateTime.now().toString())
-            .toMap());
+      "folders",
+      FolderModel(title: "Miscellaneous", added: DateTime.now().toString())
+          .toMap(),
+    );
   }
 
   /*
@@ -146,16 +148,27 @@ class DatabaseHelper {
     );
   }
 
-  Future<List<ItemModel>> getItems(String table) async {
+  Future<List<ItemModel>> getItems(
+      String table, String sort, String order) async {
     final db = await _databaseHelper.database;
-    final List<Map<String, dynamic>> items = await db.rawQuery("""
+    String sortBy = "";
+    if (sort == consts.ABC_SORT) {
+      sortBy = "title";
+    }
+    if (sort == consts.ADDED_SORT) {
+      sortBy = "added";
+    } else if (sort == consts.MODIFIED_SORT) {
+      sortBy = "modified";
+    }
+    List<Map<String, dynamic>> items = await db.rawQuery("""
       SELECT *
       FROM $itemTable
       WHERE type = "note"
-      ORDER BY pinned DESC, added DESC
+      ORDER BY pinned DESC, $sortBy $order
 """);
-    List<ItemModel> itemList =
-        items.isNotEmpty ? items.map((e) => ItemModel.fromMap(e)).toList() : [];
+    List<ItemModel> itemList = items.isNotEmpty
+        ? items.map((item) => ItemModel.fromMap(item)).toList()
+        : [];
     return itemList;
   }
 

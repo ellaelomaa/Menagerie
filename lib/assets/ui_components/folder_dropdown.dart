@@ -21,7 +21,6 @@ class CustomDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String _selectedValue = "Folder";
     return Consumer<FolderProvider>(
       builder: (context, provider, child) {
         return Stack(
