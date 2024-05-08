@@ -2,15 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:lists/assets/ui_components/folder_dropdown.dart';
-import 'package:lists/database/db_helper.dart';
 import 'package:lists/database/models/item_model.dart';
 import 'package:lists/providers/folder_provider.dart';
 import 'package:lists/providers/item_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewNoteForm extends StatefulWidget {
-  const NewNoteForm({Key? key, this.item}) : super(key: key);
+  const NewNoteForm({Key? key, this.item, required this.newItem})
+      : super(key: key);
   final ItemModel? item;
+  final bool newItem;
 
   @override
   State<NewNoteForm> createState() => _NewNoteFormState();
@@ -21,9 +22,7 @@ class _NewNoteFormState extends State<NewNoteForm> {
   final _titleController = TextEditingController();
   final _contentController = TextEditingController();
 
-  final DatabaseHelper _databaseHelper = DatabaseHelper();
-
-  bool editable = false;
+  late bool editable; // Controls readOnly-value with TextFields.
 
   // DATA DO BE SAVED
   final title = "";
@@ -33,6 +32,7 @@ class _NewNoteFormState extends State<NewNoteForm> {
   @override
   void initState() {
     super.initState();
+    editable = widget.newItem;
     if (widget.item != null) {
       _titleController.text = widget.item!.title;
       _contentController.text = widget.item!.content!;
@@ -52,6 +52,7 @@ class _NewNoteFormState extends State<NewNoteForm> {
           onPressed: () {
             if (_titleController.text.isNotEmpty) {
               if (widget.item != null) {
+                // Checking if the item is being edited or created.
                 noteProvider.editItem(
                   ItemModel(
                       id: widget.item?.id,
@@ -64,27 +65,35 @@ class _NewNoteFormState extends State<NewNoteForm> {
                       folderId: folderProvider.selectedFolder),
                 );
               } else {
-                noteProvider.addItem(
-                  ItemModel(
-                      title: _titleController.text.trim(),
-                      content: _contentController.text.trim(),
-                      added: DateTime.now().toString(),
-                      type: "note",
-                      pinned: 0,
-                      folderId: folderProvider.selectedFolder),
-                );
+                // If the item is new
+                if (_titleController.text.isNotEmpty &&
+                    _contentController.text.isNotEmpty) {
+                  // If all fields are filled
+                  noteProvider.addItem(
+                    ItemModel(
+                        title: _titleController.text.trim(),
+                        content: _contentController.text.trim(),
+                        added: DateTime.now().toString(),
+                        type: "note",
+                        pinned: 0,
+                        folderId: folderProvider.selectedFolder),
+                  );
+                }
+                if (_titleController.text.isEmpty &&
+                    _contentController.text.isNotEmpty) {
+                  // If only the note field has been filled
+                  noteProvider.addItem(
+                    ItemModel(
+                        title: DateTime.now().toString(),
+                        content: _contentController.text.trim(),
+                        added: DateTime.now().toString(),
+                        type: "note",
+                        pinned: 0,
+                        folderId: folderProvider.selectedFolder),
+                  );
+                }
               }
-
               Navigator.pop(context);
-            }
-            if (_titleController.text.isEmpty &&
-                _contentController.text.isEmpty) {
-              Navigator.pop(context);
-            } else {
-              const snackBar = SnackBar(
-                content: Text("Please enter a title"),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           },
           icon: const Icon(Icons.arrow_back),

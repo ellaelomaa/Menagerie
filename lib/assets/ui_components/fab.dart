@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:lists/forms/new_folder_form.dart';
@@ -40,7 +42,9 @@ class _FABState extends State<FAB> {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => NewNoteForm(),
+                builder: (context) => NewNoteForm(
+                  newItem: true,
+                ),
               ),
             );
           },

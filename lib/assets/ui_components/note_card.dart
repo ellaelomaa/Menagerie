@@ -76,7 +76,7 @@ class NoteCard extends StatelessWidget {
                     value: 2,
                     child: Row(
                       children: [
-                        Icon(Icons.edit),
+                        Icon(Icons.delete),
                         SizedBox(
                           width: 10,
                         ),
@@ -107,6 +107,7 @@ class NoteCard extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => NewNoteForm(
                           item: note,
+                          newItem: true,
                         ),
                       ),
                     );
@@ -116,6 +117,16 @@ class NoteCard extends StatelessWidget {
                   }
                 },
               ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => NewNoteForm(
+                      item: note,
+                      newItem: false,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ),
