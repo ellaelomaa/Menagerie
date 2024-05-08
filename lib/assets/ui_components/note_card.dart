@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lists/database/models/item_model.dart';
+import 'package:lists/forms/new_note_form.dart';
 import 'package:lists/providers/item_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -54,7 +55,9 @@ class NoteCard extends StatelessWidget {
             child: ListTile(
               leading: note.pinned == 1 ? Icon(Icons.favorite) : Icon(null),
               title: Text(note.title),
-              subtitle: Text(note.pinned.toString()),
+              subtitle: Text(
+                note.pinned.toString(),
+              ),
               trailing: PopupMenuButton(
                 itemBuilder: (context) => [
                   PopupMenuItem(
@@ -99,7 +102,15 @@ class NoteCard extends StatelessWidget {
                   if (value == 1) {
                     provider.markAsPinned(note);
                   }
-                  if (value == 2) {}
+                  if (value == 2) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => NewNoteForm(
+                          item: note,
+                        ),
+                      ),
+                    );
+                  }
                   if (value == 3) {
                     deleteNote(context, note.id!);
                   }

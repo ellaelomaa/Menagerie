@@ -35,6 +35,13 @@ class ItemProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> editItem(ItemModel item) async {
+    await _databaseHelper.updateItem(item);
+    if (item.type == "note") {
+      _getAllNotes();
+    }
+  }
+
   Future<void> markAsPinned(ItemModel item) async {
     await _databaseHelper.pinItem(item);
     _getAllNotes();

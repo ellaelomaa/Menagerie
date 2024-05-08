@@ -120,6 +120,12 @@ class DatabaseHelper {
         where: "id = ?", whereArgs: [folder.id]);
   }
 
+  Future<void> updateItem(ItemModel item) async {
+    final db = await _databaseHelper.database;
+    await db
+        .update(itemTable, item.toMap(), where: "id = ?", whereArgs: [item.id]);
+  }
+
   Future<void> pinItem(ItemModel item) async {
     final db = await _databaseHelper.database;
     late int pinned;
@@ -177,6 +183,13 @@ class DatabaseHelper {
     List<Map<String, dynamic>> results =
         await db.query(folderTable, where: "id = ?", whereArgs: [id]);
     return FolderModel.fromMap(results[0]);
+  }
+
+  Future<ItemModel> getItemById(int id) async {
+    final db = await _databaseHelper.database;
+    List<Map<String, dynamic>> results =
+        await db.query(itemTable, where: "id = ?", whereArgs: [id]);
+    return ItemModel.fromMap(results[0]);
   }
 
   Future<List<ItemModel>> getPinned(String type) async {

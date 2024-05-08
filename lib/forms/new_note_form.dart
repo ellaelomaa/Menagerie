@@ -1,14 +1,16 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:lists/assets/ui_components/folder_dropdown.dart';
+import 'package:lists/database/db_helper.dart';
 import 'package:lists/database/models/item_model.dart';
 import 'package:lists/providers/folder_provider.dart';
 import 'package:lists/providers/item_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewNoteForm extends StatefulWidget {
-  NewNoteForm({super.key});
+  const NewNoteForm({Key? key, this.item}) : super(key: key);
+  final ItemModel? item;
 
   @override
   State<NewNoteForm> createState() => _NewNoteFormState();
@@ -17,8 +19,9 @@ class NewNoteForm extends StatefulWidget {
 class _NewNoteFormState extends State<NewNoteForm> {
   // CONTROLLERS
   final _titleController = TextEditingController();
-
   final _contentController = TextEditingController();
+
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
 
   bool editable = false;
 
@@ -26,6 +29,15 @@ class _NewNoteFormState extends State<NewNoteForm> {
   final title = "";
   final content = "";
   final cardColor = Color.fromARGB(255, 240, 232, 219);
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.item != null) {
+      _titleController.text = widget.item!.title;
+      _contentController.text = widget.item!.content!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +51,30 @@ class _NewNoteFormState extends State<NewNoteForm> {
         leading: IconButton(
           onPressed: () {
             if (_titleController.text.isNotEmpty) {
-              ItemModel note = ItemModel(
-                  title: _titleController.text.trim(),
-                  content: _contentController.text.trim(),
-                  added: DateTime.now().toString(),
-                  type: "note",
-                  pinned: 0,
-                  folderId: folderProvider.selectedFolder);
-              noteProvider.addItem(note);
+              if (widget.item != null) {
+                noteProvider.editItem(
+                  ItemModel(
+                      id: widget.item?.id,
+                      title: _titleController.text.trim(),
+                      content: _contentController.text.trim(),
+                      added: widget.item!.added,
+                      modified: DateTime.now().toString(),
+                      pinned: widget.item!.pinned,
+                      type: "note",
+                      folderId: folderProvider.selectedFolder),
+                );
+              } else {
+                noteProvider.addItem(
+                  ItemModel(
+                      title: _titleController.text.trim(),
+                      content: _contentController.text.trim(),
+                      added: DateTime.now().toString(),
+                      type: "note",
+                      pinned: 0,
+                      folderId: folderProvider.selectedFolder),
+                );
+              }
+
               Navigator.pop(context);
             }
             if (_titleController.text.isEmpty &&
@@ -71,7 +99,7 @@ class _NewNoteFormState extends State<NewNoteForm> {
                 setState(() {});
               },
               icon:
-                  editable == true ? Icon(Icons.edit) : Icon(Icons.visibility),
+                  !editable == true ? Icon(Icons.edit) : Icon(Icons.visibility),
             )
           ],
         ),
@@ -86,7 +114,7 @@ class _NewNoteFormState extends State<NewNoteForm> {
                 TextFormField(
                   textAlign: TextAlign.center,
                   controller: _titleController,
-                  readOnly: editable,
+                  readOnly: !editable,
                   decoration: InputDecoration(
                     isCollapsed: true,
                     border: InputBorder.none,
@@ -162,7 +190,7 @@ class _NewNoteFormState extends State<NewNoteForm> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 20),
                       child: TextField(
-                        readOnly: editable,
+                        readOnly: !editable,
                         controller: _contentController,
                         keyboardType: TextInputType.multiline,
                         decoration: InputDecoration(
