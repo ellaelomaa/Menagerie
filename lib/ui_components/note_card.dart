@@ -56,8 +56,13 @@ class NoteCard extends StatelessWidget {
             child: ListTile(
               leading: note.pinned == 1 ? Icon(Icons.favorite) : Icon(null),
               title: Text(note.title),
-              subtitle: Text(
-                note.pinned.toString(),
+              subtitle: Column(
+                children: [
+                  Text(
+                    note.content!.toString(),
+                  ),
+                  Text(note.added),
+                ],
               ),
               trailing: PopupMenuButton(
                 itemBuilder: (context) => [

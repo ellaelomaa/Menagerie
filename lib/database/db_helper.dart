@@ -256,4 +256,9 @@ class DatabaseHelper {
     final path = join(dbpath, "men.dart");
     databaseFactory.deleteDatabase(path);
   }
+
+  Future<void> deleteAllNotes() async {
+    final db = await _databaseHelper.database;
+    await db.delete(itemTable);
+  }
 }

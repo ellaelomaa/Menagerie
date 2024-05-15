@@ -55,8 +55,6 @@ class NotesPage extends StatelessWidget {
                             ))
                         .toList(),
                     onChanged: (String? value) {
-                      print("CHANGE SORT");
-                      print(value);
                       provider.changeSort(value!);
                     },
                   ),
@@ -80,8 +78,6 @@ class NotesPage extends StatelessWidget {
                             ))
                         .toList(),
                     onChanged: (String? value) {
-                      print("CHANGE ORDER");
-                      print(value);
                       provider.changeOrder(value!);
                     },
                   ),

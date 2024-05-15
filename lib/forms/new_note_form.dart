@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lists/ui_components/folder_dropdown.dart';
 import 'package:lists/database/models/item_model.dart';
 import 'package:lists/providers/folder_provider.dart';
@@ -50,51 +51,110 @@ class _NewNoteFormState extends State<NewNoteForm> {
         backgroundColor: cardColor,
         leading: IconButton(
           onPressed: () {
-            if (_titleController.text.isNotEmpty) {
-              if (widget.item != null) {
-                // Checking if the item is being edited or created.
-                noteProvider.editItem(
+            // If the item is being edited or not
+            if (widget.item != null) {
+              // Item is edited
+              noteProvider.editItem(
+                ItemModel(
+                    id: widget.item?.id,
+                    title: _titleController.text.trim(),
+                    content: _contentController.text.trim(),
+                    added: widget.item!.added,
+                    modified: DateTime.now().toString(),
+                    pinned: widget.item!.pinned,
+                    type: "note",
+                    folderId: folderProvider.selectedFolder),
+              );
+            } else {
+              // New item
+              if (_titleController.text.isNotEmpty &&
+                  _contentController.text.isNotEmpty) {
+                // All fields filled
+                noteProvider.addItem(
                   ItemModel(
-                      id: widget.item?.id,
                       title: _titleController.text.trim(),
                       content: _contentController.text.trim(),
-                      added: widget.item!.added,
-                      modified: DateTime.now().toString(),
-                      pinned: widget.item!.pinned,
+                      added: DateTime.now().toString(),
                       type: "note",
+                      pinned: 0,
                       folderId: folderProvider.selectedFolder),
                 );
-              } else {
-                // If the item is new
-                if (_titleController.text.isNotEmpty &&
-                    _contentController.text.isNotEmpty) {
-                  // If all fields are filled
-                  noteProvider.addItem(
-                    ItemModel(
-                        title: _titleController.text.trim(),
-                        content: _contentController.text.trim(),
-                        added: DateTime.now().toString(),
-                        type: "note",
-                        pinned: 0,
-                        folderId: folderProvider.selectedFolder),
-                  );
-                }
-                if (_titleController.text.isEmpty &&
-                    _contentController.text.isNotEmpty) {
-                  // If only the note field has been filled
-                  noteProvider.addItem(
-                    ItemModel(
-                        title: DateTime.now().toString(),
-                        content: _contentController.text.trim(),
-                        added: DateTime.now().toString(),
-                        type: "note",
-                        pinned: 0,
-                        folderId: folderProvider.selectedFolder),
-                  );
-                }
               }
-              Navigator.pop(context);
+              if (_titleController.text.isEmpty &&
+                  _contentController.text.isNotEmpty) {
+                final f = DateFormat("dd.M.yyyy");
+                // Title missing
+                noteProvider.addItem(
+                  ItemModel(
+                      title: f.format(DateTime.now()),
+                      content: _contentController.text.trim(),
+                      added: DateTime.now().toString(),
+                      type: "note",
+                      pinned: 0,
+                      folderId: folderProvider.selectedFolder),
+                );
+              }
+              if (_titleController.text.isNotEmpty &&
+                  _contentController.text.isEmpty) {
+                noteProvider.addItem(
+                  ItemModel(
+                      title: _titleController.text,
+                      content: "",
+                      added: DateTime.now().toString(),
+                      type: "note",
+                      pinned: 0,
+                      folderId: folderProvider.selectedFolder),
+                );
+              }
             }
+            Navigator.pop(context);
+            //   if (_titleController.text.isNotEmpty) {
+            //     if (widget.item != null) {
+            //       // Checking if the item is being edited or created.
+            //       noteProvider.editItem(
+            //         ItemModel(
+            //             id: widget.item?.id,
+            //             title: _titleController.text.trim(),
+            //             content: _contentController.text.trim(),
+            //             added: widget.item!.added,
+            //             modified: DateTime.now().toString(),
+            //             pinned: widget.item!.pinned,
+            //             type: "note",
+            //             folderId: folderProvider.selectedFolder),
+            //       );
+            //     } else {
+            //       // If the item is new
+            //       if (_titleController.text.isNotEmpty &&
+            //           _contentController.text.isNotEmpty) {
+            //         // If all fields are filled
+            //         noteProvider.addItem(
+            //           ItemModel(
+            //               title: _titleController.text.trim(),
+            //               content: _contentController.text.trim(),
+            //               added: DateTime.now().toString(),
+            //               type: "note",
+            //               pinned: 0,
+            //               folderId: folderProvider.selectedFolder),
+            //         );
+            //       }
+            //       if (_titleController.text.isEmpty &&
+            //           _contentController.text.isNotEmpty) {
+            //         // If only the note field has been filled
+            //         noteProvider.addItem(
+            //           ItemModel(
+            //               title: DateTime.now().toString(),
+            //               content: _contentController.text.trim(),
+            //               added: DateTime.now().toString(),
+            //               type: "note",
+            //               pinned: 0,
+            //               folderId: folderProvider.selectedFolder),
+            //         );
+            //       }
+            //     }
+            //     Navigator.pop(context);
+            //   } else {
+            //     Navigator.pop(context);
+            //   }
           },
           icon: const Icon(Icons.arrow_back),
         ),

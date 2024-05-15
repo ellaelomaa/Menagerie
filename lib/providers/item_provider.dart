@@ -62,4 +62,10 @@ class ItemProvider extends ChangeNotifier {
     await _databaseHelper.deleteItem(id);
     _getAllNotes();
   }
+
+  Future deleteAllNotes() async {
+    _notes = [];
+    await _databaseHelper.deleteAllNotes();
+    _getAllNotes();
+  }
 }
