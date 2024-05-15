@@ -15,33 +15,34 @@ class NoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime dtAdded = DateTime.parse(note.added);
     final f = DateFormat("dd.M.yyyy");
-    String dtFormatted = f.format(dtAdded);
+    f.format(dtAdded);
     final noteProvider = Provider.of<ItemProvider>(context, listen: false);
 
     void deleteNote(BuildContext context, int id) {
       showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              content: Text(
-                  "Are you sure you want to delete the note? This cannot be undone."),
-              actions: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("Cancel"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    noteProvider.deleteItem(id);
-                    Navigator.pop(context);
-                  },
-                  child: Text("Delete"),
-                ),
-              ],
-            );
-          });
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text(
+                "Are you sure you want to delete the note? This cannot be undone."),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Cancel"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  noteProvider.deleteItem(id);
+                  Navigator.pop(context);
+                },
+                child: Text("Delete"),
+              ),
+            ],
+          );
+        },
+      );
     }
 
     return Consumer<ItemProvider>(
@@ -76,7 +77,7 @@ class NoteCard extends StatelessWidget {
                     value: 2,
                     child: Row(
                       children: [
-                        Icon(Icons.delete),
+                        Icon(Icons.edit),
                         SizedBox(
                           width: 10,
                         ),

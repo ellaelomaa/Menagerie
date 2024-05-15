@@ -28,7 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         flexibleSpace: Stack(
           children: [
             Image.asset(
-              "lib/assets/images/tarot.jpg",
+              "assets/images/tarot.jpg",
               height: MediaQuery.of(context).size.height * 0.4,
               width: MediaQuery.of(context).size.width,
               fit: BoxFit.cover,

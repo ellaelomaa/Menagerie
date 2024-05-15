@@ -72,23 +72,23 @@ class CustomDrawerButton extends StatelessWidget {
 
   AssetImage _drawerImage(String destination) {
     if (destination == "home") {
-      return AssetImage("lib/assets/images/forepaugh.jpg");
+      return AssetImage("assets/images/forepaugh.jpg");
     }
     if (destination == "notes") {
-      return AssetImage("lib/assets/images/gentry.jpg");
+      return AssetImage("assets/images/gentry.jpg");
     }
     if (destination == "folders") {
-      return AssetImage("lib/assets/images/floating.jpg");
+      return AssetImage("assets/images/floating.jpg");
     }
     if (destination == "tarot") {
-      return AssetImage("lib/assets/images/yucca.jpg");
+      return AssetImage("assets/images/yucca.jpg");
     }
     if (destination == "ordered") {
-      return AssetImage("lib/assets/images/trampolin.jpg");
+      return AssetImage("assets/images/trampolin.jpg");
     } else if (destination == "checklist") {
-      return AssetImage("lib/assets/images/watercircus.jpg");
+      return AssetImage("assets/images/watercircus.jpg");
     } else {
-      return AssetImage("lib/assets/images/tarot.jpg");
+      return AssetImage("assets/images/tarot.jpg");
     }
   }
 

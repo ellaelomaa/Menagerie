@@ -2,13 +2,13 @@
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:lists/assets/ui_components/app_bar.dart';
-import 'package:lists/assets/ui_components/drawer.dart';
-import 'package:lists/assets/ui_components/fab.dart';
-import 'package:lists/assets/ui_components/note_card.dart';
+import 'package:lists/ui_components/app_bar.dart';
+import 'package:lists/ui_components/drawer.dart';
+import 'package:lists/ui_components/fab.dart';
 import 'package:lists/providers/item_provider.dart';
+import 'package:lists/ui_components/note_card.dart';
 import 'package:provider/provider.dart';
-import 'package:lists/assets/consts/db_consts.dart' as consts;
+import 'package:lists/consts/db_consts.dart' as consts;
 
 class NotesPage extends StatelessWidget {
   const NotesPage({super.key});

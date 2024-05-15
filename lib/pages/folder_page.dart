@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:lists/assets/ui_components/app_bar.dart';
-import 'package:lists/assets/ui_components/fab.dart';
-import 'package:lists/assets/ui_components/folder_dropdown.dart';
-import 'package:lists/assets/ui_components/folder_row.dart';
 import 'package:lists/providers/folder_provider.dart';
+import 'package:lists/ui_components/app_bar.dart';
+import 'package:lists/ui_components/fab.dart';
+import 'package:lists/ui_components/folder_dropdown.dart';
+import 'package:lists/ui_components/folder_row.dart';
 import 'package:provider/provider.dart';
 
 class FolderPage extends StatelessWidget {

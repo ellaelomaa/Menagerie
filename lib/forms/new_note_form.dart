@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:lists/assets/ui_components/folder_dropdown.dart';
+import 'package:lists/ui_components/folder_dropdown.dart';
 import 'package:lists/database/models/item_model.dart';
 import 'package:lists/providers/folder_provider.dart';
 import 'package:lists/providers/item_provider.dart';
@@ -137,7 +137,7 @@ class _NewNoteFormState extends State<NewNoteForm> {
                       height: 15,
                     ),
                     Image(
-                      image: AssetImage("lib/assets/icons/bottom_line.png"),
+                      image: AssetImage("assets/icons/bottom_line.png"),
                     ),
                   ],
                 ),
@@ -159,7 +159,7 @@ class _NewNoteFormState extends State<NewNoteForm> {
                       flipX: true,
                       flipY: true,
                       child: Image(
-                        image: AssetImage("lib/assets/icons/corner.png"),
+                        image: AssetImage("assets/icons/corner.png"),
                         width: 65,
                       ),
                     ),
@@ -170,7 +170,7 @@ class _NewNoteFormState extends State<NewNoteForm> {
                     child: Transform.flip(
                       flipY: true,
                       child: Image(
-                        image: AssetImage("lib/assets/icons/corner.png"),
+                        image: AssetImage("assets/icons/corner.png"),
                         width: 65,
                       ),
                     ),
@@ -181,7 +181,7 @@ class _NewNoteFormState extends State<NewNoteForm> {
                     child: Transform.flip(
                       flipX: true,
                       child: Image(
-                        image: AssetImage("lib/assets/icons/corner.png"),
+                        image: AssetImage("assets/icons/corner.png"),
                         width: 65,
                       ),
                     ),
@@ -190,7 +190,7 @@ class _NewNoteFormState extends State<NewNoteForm> {
                     bottom: 0,
                     right: 0,
                     child: Image(
-                      image: AssetImage("lib/assets/icons/corner.png"),
+                      image: AssetImage("assets/icons/corner.png"),
                       width: 65,
                     ),
                   ),

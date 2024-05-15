@@ -1,6 +1,6 @@
 // Can be a list or a tarot hand
 
-class Parent {
+class ParentModel {
   final int? id;
   final String title;
   final String added;
@@ -8,7 +8,7 @@ class Parent {
   final String type;
   final int folderId;
 
-  Parent({
+  ParentModel({
     this.id,
     required this.title,
     required this.added,
@@ -17,7 +17,7 @@ class Parent {
     required this.folderId,
   });
 
-  factory Parent.fromMap(Map<String, dynamic> json) => Parent(
+  factory ParentModel.fromMap(Map<String, dynamic> json) => ParentModel(
         id: json["id"],
         title: json["title"],
         added: json["added"],

@@ -68,8 +68,8 @@ class CustomDropdown extends StatelessWidget {
                     offset: const Offset(-20, 0),
                     scrollbarTheme: ScrollbarThemeData(
                       radius: const Radius.circular(40),
-                      thickness: MaterialStateProperty.all<double>(6),
-                      thumbVisibility: MaterialStateProperty.all<bool>(true),
+                      thickness: WidgetStateProperty.all<double>(6),
+                      thumbVisibility: WidgetStateProperty.all<bool>(true),
                     ),
                   ),
                   menuItemStyleData: const MenuItemStyleData(
@@ -85,7 +85,7 @@ class CustomDropdown extends StatelessWidget {
                   height: 30,
                 ),
                 Image(
-                  image: AssetImage("lib/assets/icons/bottom_line.png"),
+                  image: AssetImage("assets/icons/bottom_line.png"),
                 ),
               ],
             ),

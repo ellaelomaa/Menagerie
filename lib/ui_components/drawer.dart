@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lists/assets/ui_components/drawer_button.dart';
+import 'package:lists/ui_components/drawer_button.dart';
 
 class DrawerNav extends StatelessWidget {
   const DrawerNav({super.key});

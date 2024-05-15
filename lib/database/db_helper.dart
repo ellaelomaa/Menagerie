@@ -6,7 +6,7 @@ import 'package:lists/database/models/item_model.dart';
 import 'package:lists/database/models/parent_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:lists/assets/consts/db_consts.dart' as consts;
+import 'package:lists/consts/db_consts.dart' as consts;
 
 class DatabaseHelper {
   // TABLE CONSTANTS
@@ -100,7 +100,7 @@ class DatabaseHelper {
     await db.insert(folderTable, folder.toMap());
   }
 
-  Future<void> addParent(Parent parent) async {
+  Future<void> addParent(ParentModel parent) async {
     final db = await _databaseHelper.database;
     await db.insert(parentTable, parent.toMap());
   }
@@ -118,6 +118,12 @@ class DatabaseHelper {
     final db = await _databaseHelper.database;
     await db.update(folderTable, folder.toMap(),
         where: "id = ?", whereArgs: [folder.id]);
+  }
+
+  Future<void> updateParent(ParentModel parent) async {
+    final db = await _databaseHelper.database;
+    await db.update(parentTable, parent.toMap(),
+        where: "id = ?", whereArgs: [parent.id]);
   }
 
   Future<void> updateItem(ItemModel item) async {
@@ -154,6 +160,21 @@ class DatabaseHelper {
     );
   }
 
+  Future<List<ParentModel>> getParents(String type) async {
+    final db = await _databaseHelper.database;
+    final List<Map<String, dynamic>> parents = await db.query(
+      parentTable,
+      where: "type = ?",
+      whereArgs: [type],
+    );
+    return List.generate(
+      parents.length,
+      (index) => ParentModel.fromMap(
+        parents[index],
+      ),
+    );
+  }
+
   Future<List<ItemModel>> getItems(
       String table, String sort, String order) async {
     final db = await _databaseHelper.database;
@@ -185,6 +206,13 @@ class DatabaseHelper {
     return FolderModel.fromMap(results[0]);
   }
 
+  Future<ParentModel> getParentById(int id) async {
+    final db = await _databaseHelper.database;
+    List<Map<String, dynamic>> results =
+        await db.query(parentTable, where: "id = ?", whereArgs: [id]);
+    return ParentModel.fromMap(results[0]);
+  }
+
   Future<ItemModel> getItemById(int id) async {
     final db = await _databaseHelper.database;
     List<Map<String, dynamic>> results =
@@ -212,92 +240,15 @@ class DatabaseHelper {
     await db.delete(folderTable, where: "id = ?", whereArgs: [id]);
   }
 
+  Future<void> deleteParent(int id) async {
+    final db = await _databaseHelper.database;
+    await db.delete(parentTable, where: "id = ?", whereArgs: [id]);
+  }
+
   Future<void> deleteItem(int id) async {
     final db = await _databaseHelper.database;
     await db.delete(itemTable, where: "id = ?", whereArgs: [id]);
   }
-
-  // static Future<List<Map<String, dynamic>>> getAllFromTable(
-  //     String table) async {
-  //   Database db = await instance.database;
-  //   return db.query(table);
-  // }
-
-  // Future<List<Parent>> getLists(int type) async {
-  //   Database db = await instance.database;
-  //   var lists = await db.rawQuery(
-  //     """
-  //     SELECT *
-  //     FROM $parentTable
-  //     WHERE folderId = ? AND type = "list"
-  //     ORDER BY title
-  //     """,
-  //     [type],
-  //   );
-  //   List<Parent> listList =
-  //       lists.isNotEmpty ? lists.map((c) => Parent.fromMap(c)).toList() : [];
-  //   return listList;
-  // }
-
-  // Future<List<ItemModel>> getNotes() async {
-  //   Database db = await instance.database;
-  //   var notes = await db.rawQuery("""
-  //     SELECT *
-  //     FROM $itemTable
-  //     WHERE type = "note"
-  //     ORDER BY title
-  //     """);
-  //   List<ItemModel> noteList =
-  //       notes.isNotEmpty ? notes.map((c) => ItemModel.fromMap(c)).toList() : [];
-  //   return noteList;
-  // }
-
-  /*
-  DELETE.
-  DO NOT DELETE DEFAULT FOLDERS. 
-  */
-
-  // Future<int> removeFolder(int id) async {
-  //   Database db = await instance.database;
-  //   if (id != 1) {
-  //     return await db.delete(folderTable, where: "id = ?", whereArgs: [id]);
-  //   } else {
-  //     debugPrint("Cannot delete default folder ");
-  //     return 0;
-  //   }
-  // }
-
-  // Future<int> removeList(int id) async {
-  //   Database db = await instance.database;
-  //   return await db.delete(parentTable, where: "id = ?", whereArgs: [id]);
-  // }
-
-  // Future<int> removeItem(String table, int id) async {
-  //   Database db = await instance.database;
-  //   if (table == folderTable && id == 1) {
-  //     return 0;
-  //   }
-  //   return await db.delete(table, where: "id = ?", whereArgs: [id]);
-  // }
-
-  // /*
-  // UPDATE
-  // */
-
-  // Future<int> updateFolder(FolderModel folder) async {
-  //   Database db = await instance.database;
-  //   return await db.update(folderTable, folder.toMap(),
-  //       where: "id = ?", whereArgs: [folder.id]);
-  // }
-
-  // Future<int> updateParent(Parent parent) async {
-  //   Database db = await instance.database;
-  //   return await db.rawUpdate("""
-  //       UPDATE $parentTable
-  //       SET title = ?
-  //       WHERE id = ?
-  //       """, [parent.title, parent.id]);
-  // }
 
   // DROP ALL TABLES
   Future<void> deleteDB() async {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lists/assets/ui_components/app_bar.dart';
-import 'package:lists/assets/ui_components/drawer.dart';
+import 'package:lists/ui_components/app_bar.dart';
+import 'package:lists/ui_components/drawer.dart';
 import 'package:lists/database/db_helper.dart';
 
 class Homepage extends StatelessWidget {

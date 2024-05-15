@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lists/pages/homepage.dart';
 import 'package:lists/providers/folder_provider.dart';
 import 'package:lists/providers/item_provider.dart';
+import 'package:lists/providers/parent_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => FolderProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ParentProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => ItemProvider(),

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:lists/assets/ui_components/app_bar.dart';
+import 'package:lists/ui_components/app_bar.dart';
 
 class TarotPage extends StatelessWidget {
   const TarotPage({super.key});
