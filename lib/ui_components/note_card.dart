@@ -18,7 +18,7 @@ class NoteCard extends StatelessWidget {
     f.format(dtAdded);
     final noteProvider = Provider.of<ItemProvider>(context, listen: false);
 
-    void deleteNote(BuildContext context, int id) {
+    void deleteNote(BuildContext context, ItemModel item) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -34,7 +34,7 @@ class NoteCard extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  noteProvider.deleteItem(id);
+                  noteProvider.deleteItem(item);
                   Navigator.pop(context);
                 },
                 child: Text("Delete"),
@@ -119,7 +119,7 @@ class NoteCard extends StatelessWidget {
                     );
                   }
                   if (value == 3) {
-                    deleteNote(context, note.id!);
+                    deleteNote(context, note);
                   }
                 },
               ),

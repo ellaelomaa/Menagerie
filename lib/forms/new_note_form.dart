@@ -108,53 +108,6 @@ class _NewNoteFormState extends State<NewNoteForm> {
               }
             }
             Navigator.pop(context);
-            //   if (_titleController.text.isNotEmpty) {
-            //     if (widget.item != null) {
-            //       // Checking if the item is being edited or created.
-            //       noteProvider.editItem(
-            //         ItemModel(
-            //             id: widget.item?.id,
-            //             title: _titleController.text.trim(),
-            //             content: _contentController.text.trim(),
-            //             added: widget.item!.added,
-            //             modified: DateTime.now().toString(),
-            //             pinned: widget.item!.pinned,
-            //             type: "note",
-            //             folderId: folderProvider.selectedFolder),
-            //       );
-            //     } else {
-            //       // If the item is new
-            //       if (_titleController.text.isNotEmpty &&
-            //           _contentController.text.isNotEmpty) {
-            //         // If all fields are filled
-            //         noteProvider.addItem(
-            //           ItemModel(
-            //               title: _titleController.text.trim(),
-            //               content: _contentController.text.trim(),
-            //               added: DateTime.now().toString(),
-            //               type: "note",
-            //               pinned: 0,
-            //               folderId: folderProvider.selectedFolder),
-            //         );
-            //       }
-            //       if (_titleController.text.isEmpty &&
-            //           _contentController.text.isNotEmpty) {
-            //         // If only the note field has been filled
-            //         noteProvider.addItem(
-            //           ItemModel(
-            //               title: DateTime.now().toString(),
-            //               content: _contentController.text.trim(),
-            //               added: DateTime.now().toString(),
-            //               type: "note",
-            //               pinned: 0,
-            //               folderId: folderProvider.selectedFolder),
-            //         );
-            //       }
-            //     }
-            //     Navigator.pop(context);
-            //   } else {
-            //     Navigator.pop(context);
-            //   }
           },
           icon: const Icon(Icons.arrow_back),
         ),

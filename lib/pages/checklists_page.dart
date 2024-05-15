@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:lists/database/models/parent_model.dart';
+import 'package:lists/pages/checklist_content_page.dart';
 import 'package:lists/providers/parent_provider.dart';
 import 'package:lists/ui_components/app_bar.dart';
 import 'package:lists/ui_components/drawer.dart';
@@ -72,7 +73,19 @@ class ChecklistsPage extends StatelessWidget {
                       itemCount: parents.length,
                       itemBuilder: (context, index) {
                         var parent = parents[index];
-                        return ListCard(parent: parent);
+                        return GestureDetector(
+                          child: ListCard(parent: parent),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ChecklistContent(
+                                  parentId: parent.id!,
+                                  listName: parent.title,
+                                ),
+                              ),
+                            );
+                          },
+                        );
                       },
                     ),
                   )

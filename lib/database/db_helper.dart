@@ -67,9 +67,9 @@ class DatabaseHelper {
         added TEXT NOT NULL,
         modified TEXT,
         type TEXT NOT NULL,
-        folderId INTEGER NOT NULL DEFAULT 1,
+        folderId INTEGER DEFAULT 1,
         content TEXT,
-        pinned INTEGER NOT NULL DEFAULT 0,
+        pinned INTEGER DEFAULT 0,
         checked INTEGER DEFAULT 0,
         parentId INTEGER,
         judgement INTEGER,
@@ -145,6 +145,18 @@ class DatabaseHelper {
     print(item.pinned);
   }
 
+  Future<void> checkItem(ItemModel item) async {
+    final db = await _databaseHelper.database;
+    late int checked;
+    if (item.checked == 1) {
+      checked = 0;
+    } else {
+      checked = 1;
+    }
+    await db.update(itemTable, {"checked": checked},
+        where: "id = ?", whereArgs: [item.id]);
+  }
+
   /*
   GETTERS
   */
@@ -173,6 +185,19 @@ class DatabaseHelper {
         parents[index],
       ),
     );
+  }
+
+  Future<List<ItemModel>> getChecklistItems(int parentId) async {
+    final db = await _databaseHelper.database;
+    final List<Map<String, dynamic>> items = await db.query(
+      itemTable,
+      where: "parentId = ?",
+      whereArgs: [parentId],
+    );
+    List<ItemModel> itemList = items.isNotEmpty
+        ? items.map((item) => ItemModel.fromMap(item)).toList()
+        : [];
+    return itemList;
   }
 
   Future<List<ItemModel>> getItems(

@@ -10,6 +10,7 @@ class ParentProvider extends ChangeNotifier {
 
   ParentProvider() {
     _databaseHelper = DatabaseHelper();
+    _getAllChecklists();
   }
 
   Future<void> _getAllChecklists() async {

@@ -22,9 +22,12 @@ class NewFolderForm extends StatelessWidget {
           ),
           TextButton(
             onPressed: () async {
-              await folderProvider.addFolder(FolderModel(
+              await folderProvider.addFolder(
+                FolderModel(
                   title: _folderNameController.text,
-                  added: DateTime.now().toString()));
+                  added: DateTime.now().toString(),
+                ),
+              );
               _folderNameController.clear();
               Navigator.pop(context);
             },
