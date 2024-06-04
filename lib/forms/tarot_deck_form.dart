@@ -18,15 +18,15 @@ class DeckForm extends StatelessWidget {
         ),
         TextButton(
           onPressed: () async {
-            await parentProvider.addItem(
-              ParentModel(
-                  title: _handNameController.text,
-                  added: DateTime.now().toString(),
-                  type: "tarot",
-                  folderId: 1),
-            );
+            await parentProvider
+                .addItem(ParentModel(
+                    title: _handNameController.text,
+                    added: DateTime.now().toString(),
+                    type: "tarot",
+                    folderId: 1))
+                .then((_) => Navigator.pop(context));
             _handNameController.clear();
-            Navigator.pop(context);
+            //Navigator.pop(context);
           },
           child: Text("Save"),
         ),

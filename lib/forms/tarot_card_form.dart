@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
+import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:lists/database/models/item_model.dart';
 import 'package:lists/providers/tarot_hand_provider.dart';
@@ -18,11 +21,11 @@ class TarotCardForm extends StatefulWidget {
 
 class _TarotCardFormState extends State<TarotCardForm> {
   final _titleController = TextEditingController();
-  late int _oldJudgement;
+  late int _oldJudgement; // Used to update Listview.builder
 
   // DATA TO BE SAVED
   final title = "";
-  late int judgement;
+  //late int judgement;
 
   @override
   void initState() {
@@ -37,79 +40,114 @@ class _TarotCardFormState extends State<TarotCardForm> {
   Widget build(BuildContext context) {
     final tarotProvider =
         Provider.of<TarotHandProvider>(context, listen: false);
+    final AppinioSwiperController swipeController = AppinioSwiperController();
 
-    void _saveCard(int judgement) async {
-      if (widget.newItem == true) {
-        print("is new card");
-        await tarotProvider.addCard(
-          ItemModel(
-              title: _titleController.text,
-              added: DateTime.now().toString(),
-              type: "tarot",
-              judgement: judgement,
-              parentId: widget.parentId),
-        );
+    void saveCard(int judgement) async {
+      if (_titleController.text.isNotEmpty) {
+        if (widget.newItem == true) {
+          await tarotProvider
+              .addCard(
+                ItemModel(
+                    title: _titleController.text,
+                    added: DateTime.now().toString(),
+                    type: "tarot",
+                    judgement: judgement,
+                    parentId: widget.parentId),
+              )
+              .then((_) => Navigator.pop(context));
+        } else {
+          await tarotProvider
+              .editCard(
+                  ItemModel(
+                      id: widget.item?.id,
+                      title: _titleController.text,
+                      added: widget.item!.added,
+                      modified: DateTime.now().toString(),
+                      type: widget.item!.type,
+                      judgement: judgement,
+                      parentId: widget.parentId),
+                  _oldJudgement)
+              .then((_) => Navigator.pop(context));
+        }
       } else {
-        print("edit card");
-        await tarotProvider.editCard(
-            ItemModel(
-                id: widget.item?.id,
-                title: _titleController.text,
-                added: widget.item!.added,
-                modified: DateTime.now().toString(),
-                type: widget.item!.type,
-                judgement: judgement,
-                parentId: widget.parentId),
-            _oldJudgement);
+        Navigator.pop(context);
       }
-
-      Navigator.pop(context);
     }
 
-    void _onSwipe(SwipeDirection direction) {
-      setState(
-        () {
-          if (direction == SwipeDirection.left) {
-            judgement = 0;
-          }
-          if (direction == SwipeDirection.down) {
-            judgement = 1;
-          }
-          if (direction == SwipeDirection.right) {
-            judgement = 2;
-          }
-        },
-      );
-      _saveCard(judgement);
+    void swipeEnd(int previousIndex, int targetIndex, SwiperActivity activity) {
+      if (activity.direction == AxisDirection.left) {
+        saveCard(0);
+      }
+      if (activity.direction == AxisDirection.down) {
+        saveCard(1);
+      }
+      if (activity.direction == AxisDirection.right) {
+        saveCard(2);
+      }
     }
 
-    return SimpleGestureDetector(
-      child: AlertDialog(
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 70,
         title: Text("Cast your vote"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              _saveCard(0);
-            },
-            icon: Icon(Icons.cancel),
-          ),
-          IconButton(
-            onPressed: () {
-              _saveCard(1);
-            },
-            icon: Icon(Icons.circle),
-          ),
-          IconButton(
-            onPressed: () {
-              _saveCard(2);
-            },
-            icon: Icon(Icons.favorite),
-          ),
-        ],
-        content: TextField(
-          controller: _titleController,
-          decoration:
-              InputDecoration(hintText: "Write item title", labelText: "Title"),
+      ),
+      body: SizedBox(
+        child: AppinioSwiper(
+          invertAngleOnBottomDrag: false,
+          backgroundCardCount: 0,
+          swipeOptions:
+              SwipeOptions.only(down: true, up: false, right: true, left: true),
+          controller: swipeController,
+          onSwipeEnd: swipeEnd,
+
+          // onEnd: _onEnd,
+          cardBuilder: (BuildContext context, int index) {
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 3,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  )
+                ],
+              ),
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(25),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
+                    ),
+                    child: TextField(
+                      controller: _titleController,
+                      maxLines: 3,
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                          icon: Image.asset(
+                              height: 40, "assets/icons/feather-pen.png")),
+                    ),
+                  ),
+                  Flexible(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.pink,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+          cardCount: 1,
         ),
       ),
     );

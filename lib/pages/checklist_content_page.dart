@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:lists/database/models/item_model.dart';
 import 'package:lists/providers/item_provider.dart';
 import 'package:lists/ui_components/app_bar.dart';
-import 'package:lists/ui_components/checklist_item_card.dart';
 import 'package:provider/provider.dart';
 
 class ChecklistContent extends StatelessWidget {

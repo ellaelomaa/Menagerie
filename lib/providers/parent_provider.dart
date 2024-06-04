@@ -29,9 +29,6 @@ class ParentProvider extends ChangeNotifier {
   // SETTERS
 
   Future<void> addItem(ParentModel parent) async {
-    print("Adding item:");
-    print(parent.title);
-    print(parent.type);
     await _databaseHelper.addParent(parent);
     if (parent.type == "checklist") {
       _getAllChecklists();

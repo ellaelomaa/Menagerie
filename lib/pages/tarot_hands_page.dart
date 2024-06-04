@@ -6,7 +6,7 @@ import 'package:lists/forms/tarot_card_form.dart';
 import 'package:lists/providers/tarot_hand_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:tab_container/tab_container.dart';
-import 'package:lists/consts/dialog_consts.dart' as Consts;
+import 'package:lists/consts/dialog_consts.dart' as consts;
 
 class TarotHand extends StatelessWidget {
   final int parentId;
@@ -23,7 +23,7 @@ class TarotHand extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            content: Text(Consts.DELETE_WARNING),
+            content: Text(consts.DELETE_WARNING),
             actions: [
               ElevatedButton(
                 onPressed: () {
@@ -85,13 +85,24 @@ class TarotHand extends StatelessWidget {
       );
     }
 
+    TextStyle emptyHandStyle() {
+      return TextStyle(
+        color: Colors.white,
+        fontSize: 18,
+        letterSpacing: 2.0,
+        fontWeight: FontWeight.w200,
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(listName),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.toys), // TODO: change to tophat
+            icon: Image.asset(
+                height: 40,
+                "assets/icons/crystal_moon.png"), // TODO: change to tophat
           ),
           IconButton(
             onPressed: () {},
@@ -99,102 +110,108 @@ class TarotHand extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
+              // await showDialog(
+              //   context: context,
+              //   builder: (context) =>
+              //       TarotCardForm(parentId: parentId, newItem: true),
+              // );
               _showAlertDialog(context, true);
             },
             icon: Icon(Icons.add),
           ),
         ],
       ),
-      body: Consumer<TarotHandProvider>(
-        builder: (context, provider, child) {
-          if (provider.allCards.isEmpty) {
-            return Center(
-              child: Text(provider.allCards.length.toString()),
-            );
-          } else {
-            return SizedBox(
-              width: double.infinity,
-              child: TabContainer(
-                tabs: [
-                  Text("Past"),
-                  Text("Present"),
-                  Text("Future"),
-                ],
-                tabEdge: TabEdge.top,
-                borderRadius: BorderRadius.circular(10),
-                tabBorderRadius: BorderRadius.circular(10),
-                childPadding: const EdgeInsets.all(20.0),
-                selectedTextStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.0,
-                ),
-                unselectedTextStyle: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 13.0,
-                ),
-                colors: [
-                  Color(0xFF02315E),
-                  Color(0xff00457E),
-                  Color(0xff2F70AF),
-                ],
-                children: [
-                  provider.pastCards.isNotEmpty
-                      ? ListView.builder(
-                          itemCount: provider.pastCards.length,
-                          itemBuilder: (context, index) {
-                            var card = provider.pastCards[index];
-                            return ListTile(
-                              title: Text(
-                                card.title,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              trailing: menuButton(card),
-                            );
-                          },
-                        )
-                      : Center(
-                          child: Text("nothing here"),
-                        ),
-                  provider.currentCards.isNotEmpty
-                      ? ListView.builder(
-                          itemCount: provider.currentCards.length,
-                          itemBuilder: (context, index) {
-                            var card = provider.currentCards[index];
-                            return ListTile(
-                              title: Text(
-                                card.title,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              trailing: menuButton(card),
-                            );
-                          },
-                        )
-                      : Center(
-                          child: Text("nothing here"),
-                        ),
-                  provider.futureCards.isNotEmpty
-                      ? ListView.builder(
-                          itemCount: provider.futureCards.length,
-                          itemBuilder: (context, index) {
-                            var card = provider.futureCards[index];
-                            return ListTile(
-                              title: Text(
-                                card.title,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              trailing: menuButton(card),
-                            );
-                          },
-                        )
-                      : Center(
-                          child: Text("nothing here"),
-                        ),
-                ],
-              ),
-            );
-          }
-        },
-      ),
+      body: Consumer<TarotHandProvider>(builder: (context, provider, child) {
+        return SizedBox(
+          width: double.infinity,
+          child: TabContainer(
+            tabs: [
+              Text("Past"),
+              Text("Present"),
+              Text("Future"),
+            ],
+            tabEdge: TabEdge.top,
+            borderRadius: BorderRadius.circular(10),
+            tabBorderRadius: BorderRadius.circular(10),
+            childPadding: const EdgeInsets.all(20.0),
+            selectedTextStyle: const TextStyle(
+              color: Colors.white,
+              fontSize: 15.0,
+            ),
+            unselectedTextStyle: const TextStyle(
+              color: Colors.black,
+              fontSize: 13.0,
+            ),
+            colors: [
+              Color(0xFF02315E),
+              Color(0xff00457E),
+              Color(0xff2F70AF),
+            ],
+            children: [
+              provider.pastCards.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: provider.pastCards.length,
+                      itemBuilder: (context, index) {
+                        var card = provider.pastCards[index];
+                        return ListTile(
+                          title: Text(
+                            card.title,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          trailing: menuButton(card),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text(
+                        "Things to be left in memories",
+                        style: emptyHandStyle(),
+                      ),
+                    ),
+              provider.currentCards.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: provider.currentCards.length,
+                      itemBuilder: (context, index) {
+                        var card = provider.currentCards[index];
+                        return ListTile(
+                          title: Text(
+                            card.title,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          trailing: menuButton(card),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text(
+                        "Carpe diem",
+                        style: emptyHandStyle(),
+                      ),
+                    ),
+              provider.futureCards.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: provider.futureCards.length,
+                      itemBuilder: (context, index) {
+                        var card = provider.futureCards[index];
+                        return ListTile(
+                          title: Text(
+                            card.title,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          trailing: menuButton(card),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text(
+                        "Things that might come across your path, or evade it entirely",
+                        style: emptyHandStyle(),
+                      ),
+                    ),
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -202,6 +219,10 @@ class TarotHand extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        // return Container(
+        //   height: 200,
+        //   color: Colors.red,
+        // );
         return TarotCardForm(
           parentId: parentId,
           newItem: newItem,

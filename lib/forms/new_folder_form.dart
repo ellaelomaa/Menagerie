@@ -21,14 +21,16 @@ class NewFolderForm extends StatelessWidget {
           ),
           TextButton(
             onPressed: () async {
-              await folderProvider.addFolder(
-                FolderModel(
-                  title: _folderNameController.text,
-                  added: DateTime.now().toString(),
-                ),
-              );
+              await folderProvider
+                  .addFolder(
+                    FolderModel(
+                      title: _folderNameController.text,
+                      added: DateTime.now().toString(),
+                    ),
+                  )
+                  .then((_) => Navigator.pop(context));
               _folderNameController.clear();
-              Navigator.pop(context);
+              //Navigator.pop(context);
             },
             child: Text("Save"),
           ),

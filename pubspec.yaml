@@ -54,6 +54,8 @@ dependencies:
   dropdown_button2: ^2.3.9
   tab_container: ^3.5.3
   simple_gesture_detector: ^0.2.1
+  appinio_swiper: ^2.1.1
+  flutter_card_swiper: ^7.0.1
 
 dev_dependencies:
   flutter_test:
