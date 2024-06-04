@@ -17,6 +17,55 @@ class ChecklistsPage extends StatelessWidget {
     final listNameController = TextEditingController();
     final parentProvider = Provider.of<ParentProvider>(context, listen: false);
 
+    void editNote(BuildContext context, ParentModel parent) {
+      listNameController.text = parent.title;
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Edit item"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: listNameController,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("Cancel"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await parentProvider.editParent(
+                          ParentModel(
+                            title: listNameController.text,
+                            added: parent.added,
+                            modified: DateTime.now().toString(),
+                            type: parent.type,
+                            folderId: parent.folderId,
+                          ),
+                        );
+                        Navigator.pop(context);
+                      },
+                      child: Text("Save"),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          );
+        },
+      );
+    }
+
     return Scaffold(
         appBar: CustomAppBar("Checklists"),
         drawer: const DrawerNav(),

@@ -56,6 +56,7 @@ class DatabaseHelper {
         modified TEXT,
         type TEXT NOT NULL,
         folderId INTEGER DEFAULT 1,
+        pinned INTEGER DEFAULT 0,
         FOREIGN KEY (folderId) REFERENCES folders(id) ON DELETE SET DEFAULT
         )
       """);
@@ -189,15 +190,43 @@ class DatabaseHelper {
 
   Future<List<ItemModel>> getChecklistItems(int parentId) async {
     final db = await _databaseHelper.database;
-    final List<Map<String, dynamic>> items = await db.query(
-      itemTable,
-      where: "parentId = ?",
-      whereArgs: [parentId],
-    );
+    List<Map<String, dynamic>> items = await db.rawQuery("""
+      SELECT *
+      FROM $itemTable
+      WHERE type = "checklist"
+      ORDER BY checked ASC
+""");
     List<ItemModel> itemList = items.isNotEmpty
         ? items.map((item) => ItemModel.fromMap(item)).toList()
         : [];
     return itemList;
+  }
+
+  Future<List<ItemModel>> getChildren(int parentId) async {
+    final db = await _databaseHelper.database;
+    List<Map<String, dynamic>> items = await db.rawQuery("""
+  SELECT *
+  FROM $itemTable
+  WHERE parentId = $parentId
+""");
+
+    List<ItemModel> children = items.isNotEmpty
+        ? items.map((item) => ItemModel.fromMap(item)).toList()
+        : [];
+    return children;
+  }
+
+  Future<List<ItemModel>> getJudgementItems(int parentId, int judgement) async {
+    final db = await _databaseHelper.database;
+    List<Map<String, dynamic>> items = await db.rawQuery("""
+  SELECT *
+  FROM $itemTable
+  WHERE parentId = $parentId AND judgement = $judgement
+""");
+    List<ItemModel> children = items.isNotEmpty
+        ? items.map((item) => ItemModel.fromMap(item)).toList()
+        : [];
+    return children;
   }
 
   Future<List<ItemModel>> getItems(

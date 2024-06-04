@@ -7,14 +7,17 @@ import 'package:lists/database/models/item_model.dart';
 class ItemProvider extends ChangeNotifier {
   late DatabaseHelper _databaseHelper;
 
-  List<ItemModel> _notes = [];
-  List<ItemModel> get notes => _notes;
-
   int _parentId = 1;
   int get parentId => _parentId;
 
+  List<ItemModel> _notes = [];
+  List<ItemModel> get notes => _notes;
+
   List<ItemModel> _checklistItems = [];
   List<ItemModel> get checklistItems => _checklistItems;
+
+  List<ItemModel> _tarotCards = [];
+  List<ItemModel> get tarotCards => _tarotCards;
 
   String _selectedSort = "Alphabetically";
   String _order = "ASC";
@@ -23,8 +26,6 @@ class ItemProvider extends ChangeNotifier {
 
   ItemProvider() {
     _databaseHelper = DatabaseHelper();
-    _getAllNotes();
-    _getChecklistItems(parentId);
   }
 
   // GETTERS
@@ -39,6 +40,11 @@ class ItemProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> _getTarotCards(int parentId) async {
+    _tarotCards = await _databaseHelper.getChildren(parentId);
+    notifyListeners();
+  }
+
   // SETTERS
 
   Future<void> addItem(ItemModel item) async {
@@ -47,7 +53,10 @@ class ItemProvider extends ChangeNotifier {
       _getAllNotes();
     }
     if (item.type == "checklist") {
-      _getChecklistItems(parentId);
+      _getChecklistItems(item.parentId!);
+    }
+    if (item.type == "tarot") {
+      _getTarotCards(item.parentId!);
     }
   }
 
@@ -57,7 +66,10 @@ class ItemProvider extends ChangeNotifier {
       _getAllNotes();
     }
     if (item.type == "checklist") {
-      _getChecklistItems(parentId);
+      _getChecklistItems(item.parentId!);
+    }
+    if (item.type == "tarot") {
+      _getTarotCards(item.parentId!);
     }
   }
 
@@ -81,9 +93,14 @@ class ItemProvider extends ChangeNotifier {
     _getAllNotes();
   }
 
-  setParent(int id) async {
+  setParent(int id, String type) async {
     _parentId = id;
-    _getChecklistItems(id);
+    if (type == "checklist") {
+      _getChecklistItems(id);
+    }
+    if (type == "tarot") {
+      _getTarotCards(id);
+    }
   }
 
   Future deleteItem(ItemModel item) async {
@@ -94,6 +111,9 @@ class ItemProvider extends ChangeNotifier {
     }
     if (item.type == "checklist") {
       _getChecklistItems(item.parentId!);
+    }
+    if (item.type == "tarot") {
+      _getTarotCards(item.parentId!);
     }
   }
 

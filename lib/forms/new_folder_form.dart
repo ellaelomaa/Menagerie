@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 class NewFolderForm extends StatelessWidget {
   NewFolderForm({super.key});
   final _folderNameController = TextEditingController();
-  late List<DropdownMenuItem<String>> list;
 
   @override
   Widget build(BuildContext context) {

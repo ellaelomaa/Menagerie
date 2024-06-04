@@ -7,6 +7,7 @@ class ParentModel {
   final String? modified;
   final String type;
   final int folderId;
+  final int? pinned;
 
   ParentModel({
     this.id,
@@ -15,6 +16,7 @@ class ParentModel {
     this.modified,
     required this.type,
     required this.folderId,
+    this.pinned,
   });
 
   factory ParentModel.fromMap(Map<String, dynamic> json) => ParentModel(
@@ -24,6 +26,7 @@ class ParentModel {
         modified: json["modified"],
         type: json["type"],
         folderId: json["folderId"],
+        pinned: json["pinned"],
       );
 
   Map<String, dynamic> toMap() {
@@ -34,6 +37,7 @@ class ParentModel {
       "modified": modified,
       "type": type,
       "folderId": folderId,
+      "pinned": pinned,
     };
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lists/database/models/item_model.dart';
 import 'package:lists/providers/item_provider.dart';
 import 'package:lists/ui_components/app_bar.dart';
+import 'package:lists/ui_components/checklist_item_card.dart';
 import 'package:provider/provider.dart';
 
 class ChecklistContent extends StatelessWidget {
@@ -16,7 +17,7 @@ class ChecklistContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final titleController = TextEditingController();
     final itemProvider = Provider.of<ItemProvider>(context, listen: false);
-    itemProvider.setParent(parentId);
+    itemProvider.setParent(parentId, "checklist");
 
     void editNote(BuildContext context, ItemModel item) {
       titleController.text = item.title;
@@ -98,6 +99,7 @@ class ChecklistContent extends StatelessWidget {
       appBar: CustomAppBar(listName),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          titleController.clear();
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -122,14 +124,17 @@ class ChecklistContent extends StatelessWidget {
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            await itemProvider.addItem(
-                              ItemModel(
-                                  title: titleController.text,
-                                  added: DateTime.now().toString(),
-                                  type: "checklist",
-                                  checked: 0,
-                                  parentId: parentId),
-                            );
+                            if (titleController.text.isNotEmpty) {
+                              await itemProvider.addItem(
+                                ItemModel(
+                                    title: titleController.text,
+                                    added: DateTime.now().toString(),
+                                    type: "checklist",
+                                    checked: 0,
+                                    parentId: parentId),
+                              );
+                            }
+
                             Navigator.pop(context);
                           },
                           child: Text("Save"),
@@ -160,50 +165,53 @@ class ChecklistContent extends StatelessWidget {
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       var item = items[index];
-                      return ListTile(
-                        onTap: () {
-                          provider.markAsChecked(item);
-                        },
-                        leading: item.checked == 0
-                            ? Icon(Icons.check_box_outline_blank_rounded)
-                            : Icon(Icons.check_box_outlined),
-                        title: Text(item.title),
-                        trailing: PopupMenuButton(
-                          itemBuilder: (context) => [
-                            PopupMenuItem(
-                              value: 1,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.edit),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text("Edit")
-                                ],
-                              ),
-                            ),
-                            PopupMenuItem(
-                              value: 2,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.delete),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text("Delete")
-                                ],
-                              ),
-                            ),
-                          ],
-                          offset: Offset(30, -10),
-                          onSelected: (value) {
-                            if (value == 1) {
-                              editNote(context, item);
-                            }
-                            if (value == 2) {
-                              deleteNote(context, item);
-                            }
+                      //return ChecklistItemCard(item: item, parentId: parentId);
+                      return Card(
+                        child: ListTile(
+                          onTap: () {
+                            provider.markAsChecked(item);
                           },
+                          leading: item.checked == 0
+                              ? Icon(Icons.check_box_outline_blank_rounded)
+                              : Icon(Icons.check_box_outlined),
+                          title: Text(item.title),
+                          trailing: PopupMenuButton(
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                value: 1,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.edit),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text("Edit")
+                                  ],
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: 2,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.delete),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text("Delete")
+                                  ],
+                                ),
+                              ),
+                            ],
+                            offset: Offset(30, -10),
+                            onSelected: (value) {
+                              if (value == 1) {
+                                editNote(context, item);
+                              }
+                              if (value == 2) {
+                                deleteNote(context, item);
+                              }
+                            },
+                          ),
                         ),
                       );
                     },

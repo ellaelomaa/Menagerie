@@ -4,13 +4,16 @@ import 'package:lists/database/models/parent_model.dart';
 
 class ParentProvider extends ChangeNotifier {
   List<ParentModel> _checklists = [];
+  List<ParentModel> _tarotHands = [];
   late DatabaseHelper _databaseHelper;
 
   List<ParentModel> get checklists => _checklists;
+  List<ParentModel> get tarotHands => _tarotHands;
 
   ParentProvider() {
     _databaseHelper = DatabaseHelper();
     _getAllChecklists();
+    _getAllHands();
   }
 
   Future<void> _getAllChecklists() async {
@@ -18,12 +21,23 @@ class ParentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> _getAllHands() async {
+    _tarotHands = await _databaseHelper.getParents("tarot");
+    notifyListeners();
+  }
+
   // SETTERS
 
   Future<void> addItem(ParentModel parent) async {
+    print("Adding item:");
+    print(parent.title);
+    print(parent.type);
     await _databaseHelper.addParent(parent);
     if (parent.type == "checklist") {
       _getAllChecklists();
+    }
+    if (parent.type == "tarot") {
+      _getAllHands();
     }
   }
 
@@ -32,11 +46,15 @@ class ParentProvider extends ChangeNotifier {
     if (parent.type == "checklist") {
       _getAllChecklists();
     }
+    if (parent.type == "tarot") {
+      _getAllHands();
+    }
   }
 
   Future deleteParent(int id) async {
     _checklists.removeWhere((element) => element.id == id);
     await _databaseHelper.deleteParent(id);
     _getAllChecklists();
+    _getAllHands();
   }
 }

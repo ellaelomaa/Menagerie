@@ -25,7 +25,7 @@ class _NewNoteFormState extends State<NewNoteForm> {
 
   late bool editable; // Controls readOnly-value with TextFields.
 
-  // DATA DO BE SAVED
+  // DATA TO BE SAVED
   final title = "";
   final content = "";
   final cardColor = Color.fromARGB(255, 240, 232, 219);

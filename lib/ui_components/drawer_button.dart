@@ -6,7 +6,7 @@ import 'package:lists/pages/folder_page.dart';
 import 'package:lists/pages/homepage.dart';
 import 'package:lists/pages/notes_page.dart';
 import 'package:lists/pages/ordered_page.dart';
-import 'package:lists/pages/tarot_page.dart';
+import 'package:lists/pages/tarot_decks_page.dart';
 
 class CustomDrawerButton extends StatelessWidget {
   const CustomDrawerButton(this.text, this.destination, this.flexSize,
@@ -43,7 +43,7 @@ class CustomDrawerButton extends StatelessWidget {
     if (destination == "tarot") {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => TarotPage(),
+          builder: (context) => TarotDecksPage(),
         ),
       );
     }
