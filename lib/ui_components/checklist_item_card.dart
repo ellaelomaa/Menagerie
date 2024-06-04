@@ -43,17 +43,18 @@ class ChecklistItemCard extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        await itemProvider.editItem(
-                          ItemModel(
-                              id: item.id,
-                              title: titleController.text,
-                              added: item.added,
-                              modified: DateTime.now().toString(),
-                              type: "checklist",
-                              checked: item.checked,
-                              parentId: item.parentId),
-                        );
-                        Navigator.pop(context);
+                        await itemProvider
+                            .editItem(
+                              ItemModel(
+                                  id: item.id,
+                                  title: titleController.text,
+                                  added: item.added,
+                                  modified: DateTime.now().toString(),
+                                  type: "checklist",
+                                  checked: item.checked,
+                                  parentId: item.parentId),
+                            )
+                            .then((_) => Navigator.pop(context));
                       },
                       child: Text("Save"),
                     ),

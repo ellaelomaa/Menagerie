@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lists/database/models/item_model.dart';
 import 'package:lists/providers/tarot_hand_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_gesture_detector/simple_gesture_detector.dart';
+import 'package:lists/consts/color_consts.dart' as color_consts;
 
 class TarotCardForm extends StatefulWidget {
   const TarotCardForm(
@@ -89,6 +89,7 @@ class _TarotCardFormState extends State<TarotCardForm> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70,
+        backgroundColor: color_consts.cardColor,
         title: Text("Cast your vote"),
       ),
       body: SizedBox(
@@ -105,7 +106,7 @@ class _TarotCardFormState extends State<TarotCardForm> {
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
+                color: color_consts.cardColor,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.2),
@@ -119,9 +120,9 @@ class _TarotCardFormState extends State<TarotCardForm> {
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(25),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    decoration: BoxDecoration(
+                      color: color_consts.cardColor,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10),
@@ -129,19 +130,26 @@ class _TarotCardFormState extends State<TarotCardForm> {
                     ),
                     child: TextField(
                       controller: _titleController,
-                      maxLines: 3,
-                      textAlign: TextAlign.center,
                       decoration: InputDecoration(
                           icon: Image.asset(
                               height: 40, "assets/icons/feather-pen.png")),
                     ),
                   ),
+                  SizedBox(
+                    height: 50,
+                  ),
                   Flexible(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.pink,
+                          border: Border.all(color: Colors.black, width: 2)),
+                      child: Image.asset(
+                        "assets/images/rider-waite/Cups02.jpg",
+                        fit: BoxFit.cover,
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 50,
                   ),
                 ],
               ),

@@ -7,6 +7,7 @@ import 'package:lists/database/models/item_model.dart';
 import 'package:lists/providers/folder_provider.dart';
 import 'package:lists/providers/item_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:lists/consts/color_consts.dart' as color_consts;
 
 class NoteForm extends StatefulWidget {
   const NoteForm({Key? key, this.item, required this.newItem})
@@ -46,9 +47,9 @@ class _NoteFormState extends State<NoteForm> {
     final noteProvider = Provider.of<ItemProvider>(context, listen: false);
 
     return Scaffold(
-      backgroundColor: cardColor,
+      backgroundColor: color_consts.cardColor,
       appBar: AppBar(
-        backgroundColor: cardColor,
+        backgroundColor: color_consts.cardColor,
         leading: IconButton(
           onPressed: () {
             // If the item is being edited or not
