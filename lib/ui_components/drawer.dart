@@ -7,21 +7,24 @@ class DrawerNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Drawer(
-      child: Expanded(
-        child: Column(
-          children: [
-            DrawerHeader(
-              child: Center(child: Text("Choose your fate")),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 120,
+            child: DrawerHeader(
+              child: Center(
+                child: Text("Choose your fate"),
+              ),
             ),
-            CustomDrawerButton("Home", "home", 2),
-            CustomDrawerButton("Notes", "notes", 2),
-            CustomDrawerButton("Folders", "folders", 2),
-            CustomDrawerButton("Tarot", "tarot", 2),
-            CustomDrawerButton("Ordered", "ordered", 2),
-            CustomDrawerButton("Checklists", "checklist", 2),
-            CustomDrawerButton("About", "about", 1),
-          ],
-        ),
+          ),
+          CustomDrawerButton("Home", "home", 2),
+          CustomDrawerButton("Notes", "notes", 2),
+          CustomDrawerButton("Folders", "folders", 2),
+          CustomDrawerButton("Tarot", "tarot", 2),
+          CustomDrawerButton("Ordered", "ordered", 2),
+          CustomDrawerButton("Checklists", "checklist", 2),
+          CustomDrawerButton("About", "about", 1),
+        ],
       ),
     );
   }

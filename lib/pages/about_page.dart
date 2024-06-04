@@ -9,11 +9,11 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar("Ordered lists"),
+      appBar: CustomAppBar("About page"),
       body: SafeArea(
         top: false,
         child: Center(
-          child: Text("ORDERED LISTS"),
+          child: Text("ABOUT"),
         ),
       ),
     );

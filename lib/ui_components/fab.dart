@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:lists/forms/new_folder_form.dart';
-import 'package:lists/forms/new_note_form.dart';
+import 'package:lists/forms/note_form.dart';
 
 class FAB extends StatefulWidget {
   const FAB({super.key});
@@ -42,7 +42,7 @@ class _FABState extends State<FAB> {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => NewNoteForm(
+                builder: (context) => NoteForm(
                   newItem: true,
                 ),
               ),

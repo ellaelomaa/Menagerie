@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lists/database/models/item_model.dart';
-import 'package:lists/forms/new_note_form.dart';
+import 'package:lists/forms/note_form.dart';
 import 'package:lists/providers/item_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -111,7 +111,7 @@ class NoteCard extends StatelessWidget {
                   if (value == 2) {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => NewNoteForm(
+                        builder: (context) => NoteForm(
                           item: note,
                           newItem: true,
                         ),
@@ -126,7 +126,7 @@ class NoteCard extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => NewNoteForm(
+                    builder: (context) => NoteForm(
                       item: note,
                       newItem: false,
                     ),

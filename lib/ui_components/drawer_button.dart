@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:lists/pages/about_page.dart';
 import 'package:lists/pages/checklists_page.dart';
 import 'package:lists/pages/folder_page.dart';
 import 'package:lists/pages/homepage.dart';
@@ -64,7 +65,7 @@ class CustomDrawerButton extends StatelessWidget {
     if (destination == "about") {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => OrderedPage(),
+          builder: (context) => AboutPage(),
         ),
       );
     }

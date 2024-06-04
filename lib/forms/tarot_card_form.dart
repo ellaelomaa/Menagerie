@@ -1,23 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:lists/database/models/item_model.dart';
-import 'package:lists/providers/children_provider.dart';
+import 'package:lists/providers/tarot_hand_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 
-class TarotForm extends StatefulWidget {
-  const TarotForm({Key? key, required this.parentId}) : super(key: key);
+class TarotCardForm extends StatefulWidget {
+  const TarotCardForm(
+      {Key? key, required this.parentId, this.item, required this.newItem})
+      : super(key: key);
   final int parentId;
+  final ItemModel? item;
+  final bool newItem;
 
   @override
-  State<TarotForm> createState() => _TarotFormState();
+  State<TarotCardForm> createState() => _TarotCardFormState();
 }
 
-class _TarotFormState extends State<TarotForm> {
+class _TarotCardFormState extends State<TarotCardForm> {
   final _titleController = TextEditingController();
+  late int _oldJudgement;
 
   // DATA TO BE SAVED
   final title = "";
-  int judgement = 1;
+  late int judgement;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.item != null) {
+      _titleController.text = widget.item!.title;
+      _oldJudgement = widget.item!.judgement!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +39,30 @@ class _TarotFormState extends State<TarotForm> {
         Provider.of<TarotHandProvider>(context, listen: false);
 
     void _saveCard(int judgement) async {
-      await tarotProvider.addCard(
-        ItemModel(
-            title: _titleController.text,
-            added: DateTime.now().toString(),
-            type: "tarot",
-            judgement: judgement,
-            parentId: widget.parentId),
-      );
+      if (widget.newItem == true) {
+        print("is new card");
+        await tarotProvider.addCard(
+          ItemModel(
+              title: _titleController.text,
+              added: DateTime.now().toString(),
+              type: "tarot",
+              judgement: judgement,
+              parentId: widget.parentId),
+        );
+      } else {
+        print("edit card");
+        await tarotProvider.editCard(
+            ItemModel(
+                id: widget.item?.id,
+                title: _titleController.text,
+                added: widget.item!.added,
+                modified: DateTime.now().toString(),
+                type: widget.item!.type,
+                judgement: judgement,
+                parentId: widget.parentId),
+            _oldJudgement);
+      }
+
       Navigator.pop(context);
     }
 

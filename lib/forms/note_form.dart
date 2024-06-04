@@ -8,17 +8,17 @@ import 'package:lists/providers/folder_provider.dart';
 import 'package:lists/providers/item_provider.dart';
 import 'package:provider/provider.dart';
 
-class NewNoteForm extends StatefulWidget {
-  const NewNoteForm({Key? key, this.item, required this.newItem})
+class NoteForm extends StatefulWidget {
+  const NoteForm({Key? key, this.item, required this.newItem})
       : super(key: key);
   final ItemModel? item;
   final bool newItem;
 
   @override
-  State<NewNoteForm> createState() => _NewNoteFormState();
+  State<NoteForm> createState() => _NoteFormState();
 }
 
-class _NewNoteFormState extends State<NewNoteForm> {
+class _NoteFormState extends State<NoteForm> {
   // CONTROLLERS
   final _titleController = TextEditingController();
   final _contentController = TextEditingController();

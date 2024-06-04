@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:lists/forms/hand_form.dart';
+import 'package:lists/forms/tarot_deck_form.dart';
 import 'package:lists/pages/tarot_hands_page.dart';
 import 'package:lists/providers/parent_provider.dart';
 import 'package:lists/ui_components/drawer.dart';

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:lists/pages/homepage.dart';
-import 'package:lists/providers/children_provider.dart';
+import 'package:lists/providers/tarot_hand_provider.dart';
 import 'package:lists/providers/folder_provider.dart';
 import 'package:lists/providers/item_provider.dart';
 import 'package:lists/providers/parent_provider.dart';
