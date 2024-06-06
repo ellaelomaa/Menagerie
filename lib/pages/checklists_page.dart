@@ -52,8 +52,7 @@ class ChecklistsPage extends StatelessWidget {
                             type: parent.type,
                             folderId: parent.folderId,
                           ),
-                        );
-                        Navigator.pop(context);
+                        ).then((_) => Navigator.pop(context));
                       },
                       child: Text("Save"),
                     ),
@@ -93,9 +92,8 @@ class ChecklistsPage extends StatelessWidget {
                                 added: DateTime.now().toString(),
                                 type: "checklist",
                                 folderId: 1),
-                          );
+                          ).then((_) => Navigator.pop(context));
                           listNameController.clear();
-                          Navigator.pop(context);
                         },
                         child: Text("Save"),
                       ),

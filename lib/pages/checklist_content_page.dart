@@ -53,8 +53,7 @@ class ChecklistContent extends StatelessWidget {
                               type: "checklist",
                               checked: item.checked,
                               parentId: item.parentId),
-                        );
-                        Navigator.pop(context);
+                        ).then((_) => Navigator.pop(context));
                       },
                       child: Text("Save"),
                     ),
@@ -131,10 +130,9 @@ class ChecklistContent extends StatelessWidget {
                                     type: "checklist",
                                     checked: 0,
                                     parentId: parentId),
-                              );
+                              ).then((_) => Navigator.pop(context));
                             }
 
-                            Navigator.pop(context);
                           },
                           child: Text("Save"),
                         ),
